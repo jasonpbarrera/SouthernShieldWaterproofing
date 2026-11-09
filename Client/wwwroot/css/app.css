@@ -40,6 +40,14 @@ h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-heading);
     font-weight: 600;
     margin-bottom: 0.5rem;
+    outline: none !important;
+}
+
+h1:focus, h1:focus-visible,
+h2:focus, h2:focus-visible,
+h3:focus, h3:focus-visible {
+    outline: none !important;
+    box-shadow: none !important;
 }
 
 a {

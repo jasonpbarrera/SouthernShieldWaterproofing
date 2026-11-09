@@ -11,6 +11,13 @@
     font-size: 2.5rem;
     color: var(--brand-primary);
     margin-bottom: 0.5rem;
+    outline: none !important;
+}
+
+.hero-content h1:focus,
+.hero-content h1:focus-visible {
+    outline: none !important;
+    box-shadow: none !important;
 }
 
 .tagline {
