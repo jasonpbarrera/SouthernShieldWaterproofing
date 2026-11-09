@@ -107,30 +107,39 @@ namespace SmallBusinessSite.Api
 
             // 4. Optional: Trigger instant Brevo transactional email notification to business owner
             // Security: Never trust client-supplied recipient addresses. Resolve from server env var or Cosmos DB `clients` container.
-            string brevoApiKey = Environment.GetEnvironmentVariable("BREVO_API_KEY") ?? "";
+            string? brevoApiKey = Environment.GetEnvironmentVariable("BREVO_API_KEY");
             string? recipientEmail = Environment.GetEnvironmentVariable("LEAD_NOTIFICATION_EMAIL");
             string? senderEmail = Environment.GetEnvironmentVariable("BREVO_SENDER_EMAIL");
 
-            if (!string.IsNullOrWhiteSpace(brevoApiKey))
+            if (string.IsNullOrWhiteSpace(brevoApiKey) || string.IsNullOrWhiteSpace(recipientEmail) || string.IsNullOrWhiteSpace(senderEmail))
+            {
+                if (TryGetCosmosCredentials(out string cEndpoint, out string cKey, out string cDbId))
+                {
+                    var clientDoc = await LookupClientRecordAsync(cEndpoint, cKey, cDbId, businessId);
+                    if (clientDoc != null)
+                    {
+                        if (string.IsNullOrWhiteSpace(brevoApiKey))
+                            brevoApiKey = clientDoc.BrevoApiKey;
+
+                        if (string.IsNullOrWhiteSpace(recipientEmail))
+                            recipientEmail = !string.IsNullOrWhiteSpace(clientDoc.LeadNotificationEmail) ? clientDoc.LeadNotificationEmail : clientDoc.PrimaryEmail;
+
+                        if (string.IsNullOrWhiteSpace(senderEmail))
+                            senderEmail = clientDoc.BrevoSenderEmail;
+                    }
+                }
+            }
+
+            if (string.IsNullOrWhiteSpace(senderEmail))
+            {
+                senderEmail = "info@jbdigitalservices.net";
+            }
+
+            if (!string.IsNullOrWhiteSpace(brevoApiKey) && !string.IsNullOrWhiteSpace(recipientEmail))
             {
                 try
                 {
-                    if (string.IsNullOrWhiteSpace(recipientEmail))
-                    {
-                        recipientEmail = await LookupClientPrimaryEmailAsync(cosmosEndpoint, cosmosKey, databaseId, businessId);
-                    }
-
-                    if (!string.IsNullOrWhiteSpace(recipientEmail))
-                    {
-                        senderEmail = string.IsNullOrWhiteSpace(senderEmail) ? recipientEmail : senderEmail;
-                        await SendBrevoNotificationAsync(brevoApiKey, senderEmail, recipientEmail, input);
-                    }
-                    else
-                    {
-                        _logger.LogWarning(
-                            "Skipping Brevo notification: no LEAD_NOTIFICATION_EMAIL configured and no active client record found in Cosmos DB for '{BusinessId}'.",
-                            businessId);
-                    }
+                    await SendBrevoNotificationAsync(brevoApiKey, senderEmail, recipientEmail, input);
                 }
                 catch (Exception ex)
                 {
@@ -202,7 +211,7 @@ namespace SmallBusinessSite.Api
             return (false, response.StatusCode, err);
         }
 
-        private async Task<string?> LookupClientPrimaryEmailAsync(
+        private async Task<CosmosClientRecord?> LookupClientRecordAsync(
             string cosmosEndpoint,
             string cosmosKey,
             string databaseId,
@@ -227,14 +236,7 @@ namespace SmallBusinessSite.Api
             }
 
             var clientDoc = await response.Content.ReadFromJsonAsync<CosmosClientRecord>(JsonOptions);
-            if (clientDoc == null || clientDoc.IsActive == false)
-            {
-                return null;
-            }
-
-            return !string.IsNullOrWhiteSpace(clientDoc.LeadNotificationEmail)
-                ? clientDoc.LeadNotificationEmail
-                : clientDoc.PrimaryEmail;
+            return clientDoc?.IsActive == true ? clientDoc : null;
         }
 
         private static string GenerateCosmosAuthToken(
@@ -320,6 +322,12 @@ namespace SmallBusinessSite.Api
 
         [JsonPropertyName("leadNotificationEmail")]
         public string? LeadNotificationEmail { get; set; }
+
+        [JsonPropertyName("brevoApiKey")]
+        public string? BrevoApiKey { get; set; }
+
+        [JsonPropertyName("brevoSenderEmail")]
+        public string? BrevoSenderEmail { get; set; }
 
         [JsonPropertyName("isActive")]
         public bool IsActive { get; set; } = true;
