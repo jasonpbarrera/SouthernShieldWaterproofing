@@ -1,0 +1,48 @@
+@page "/services"
+@inject IOptions<BusinessSettings> BusinessConfig
+@inject IOptions<ServicesPageSettings> ServicesConfig
+
+<PageTitle>Services | @BusinessConfig.Value.ShortName</PageTitle>
+
+<div class="services-container">
+    <div class="services-header">
+        <h1>@ServicesConfig.Value.Heading</h1>
+        <p class="lead-text">@ServicesConfig.Value.LeadText</p>
+    </div>
+
+    <!-- Core Services Grid -->
+    <div class="services-grid">
+        @foreach (var service in ServicesConfig.Value.Services)
+        {
+            <div class="service-card">
+                <div class="service-icon">@service.Icon</div>
+                <h3>@service.Title</h3>
+                <p>@service.Description</p>
+            </div>
+        }
+    </div>
+
+    <!-- Community / Spotlight Section -->
+    @if (!string.IsNullOrWhiteSpace(ServicesConfig.Value.SpotlightHeading))
+    {
+        <div class="community-section">
+            <h2>@ServicesConfig.Value.SpotlightHeading</h2>
+            <p>@ServicesConfig.Value.SpotlightText</p>
+        </div>
+    }
+
+    <!-- Optional Hiring Banner -->
+    @if (ServicesConfig.Value.ShowHiringBanner)
+    {
+        <div class="hiring-banner">
+            <div class="hiring-content">
+                <h2>@ServicesConfig.Value.HiringHeading</h2>
+                <p>@ServicesConfig.Value.HiringText</p>
+                <div class="hiring-actions">
+                    <a href="tel:@BusinessConfig.Value.PhoneNumber" class="btn btn-primary">Call to Apply</a>
+                    <a href="mailto:@BusinessConfig.Value.AdminEmail" class="btn btn-secondary">Email Resume</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>

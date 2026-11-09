@@ -1,0 +1,50 @@
+@page "/"
+@inject IOptions<BusinessSettings> BusinessConfig
+@inject IOptions<HomePageSettings> HomeConfig
+
+<PageTitle>@BusinessConfig.Value.ShortName | @BusinessConfig.Value.CompanyName</PageTitle>
+
+<!-- HERO SECTION -->
+<section class="hero-section">
+    <div class="hero-content">
+        <h1>@BusinessConfig.Value.CompanyName</h1>
+        <p class="tagline">@BusinessConfig.Value.Tagline</p>
+        <p class="hero-description">@HomeConfig.Value.HeroDescription</p>
+        <div class="hero-actions">
+            <a href="/contact" class="btn btn-primary">@HomeConfig.Value.PrimaryCtaText</a>
+            <a href="/about" class="btn btn-secondary">@HomeConfig.Value.SecondaryCtaText</a>
+        </div>
+    </div>
+</section>
+
+<!-- VALUES SECTION -->
+@if (!string.IsNullOrWhiteSpace(HomeConfig.Value.ValuesHeading))
+{
+    <section class="values-section">
+        <h2>@HomeConfig.Value.ValuesHeading</h2>
+        <p class="values-subtitle">@HomeConfig.Value.ValuesSubtitle</p>
+    </section>
+}
+
+<!-- MISSION PILLARS SECTION -->
+<section class="pillars-section">
+    @foreach (var pillar in HomeConfig.Value.Pillars)
+    {
+        <div class="pillar-card">
+            <div class="icon-placeholder">@pillar.Icon</div>
+            <h3>@pillar.Title</h3>
+            <p>@pillar.Description</p>
+        </div>
+    }
+</section>
+
+@if (!string.IsNullOrWhiteSpace(HomeConfig.Value.StoryQuote))
+{
+    <section class="our-story-section">
+        <div class="container">
+            <h2>@HomeConfig.Value.StoryHeading</h2>
+            <p class="our-story-quote">"@HomeConfig.Value.StoryQuote"</p>
+            <p><strong>- @HomeConfig.Value.StoryAttribution</strong></p>
+        </div>
+    </section>
+}

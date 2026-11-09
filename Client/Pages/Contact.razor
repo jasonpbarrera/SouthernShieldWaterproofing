@@ -1,0 +1,189 @@
+@page "/contact"
+@inject IOptions<BusinessSettings> BusinessConfig
+@inject IOptions<ContactPageSettings> ContactConfig
+@inject HttpClient Http
+
+<PageTitle>Contact | @BusinessConfig.Value.ShortName</PageTitle>
+
+<div class="contact-container">
+    <!-- Left Side: Contact Info -->
+    <div class="contact-info">
+        <h2>@ContactConfig.Value.Heading</h2>
+        <p>@ContactConfig.Value.LeadText</p>
+
+        <div class="info-item">
+            <strong>Phone:</strong><br />
+            <a href="tel:@BusinessConfig.Value.PhoneNumber">@BusinessConfig.Value.PhoneNumber</a>
+        </div>
+        <div class="info-item">
+            <strong>Email:</strong><br />
+            <a href="mailto:@BusinessConfig.Value.PrimaryEmail">@BusinessConfig.Value.PrimaryEmail</a>
+        </div>
+        @if (!string.IsNullOrWhiteSpace(BusinessConfig.Value.AdminEmail))
+        {
+            <div class="info-item">
+                <strong>Careers / Admin:</strong><br />
+                <a href="mailto:@BusinessConfig.Value.AdminEmail">@BusinessConfig.Value.AdminEmail</a>
+            </div>
+        }
+    </div>
+
+    <!-- Right Side: The Form -->
+    <div class="contact-form-wrapper">
+        @if (isSubmitted)
+        {
+            <div class="success-message">
+                <h3>Thank You! ♡</h3>
+                <p>Your message has been sent. We will be in touch with you shortly.</p>
+                <button class="btn btn-secondary" @onclick="ResetForm">Send Another Message</button>
+            </div>
+        }
+        else
+        {
+            <form @onsubmit="SubmitForm" class="custom-form">
+                <!-- Bot Protection Honeypot -->
+                <input type="text" @bind="botHoneypot" class="visually-hidden" tabindex="-1" autocomplete="off" />
+
+                @if (!string.IsNullOrWhiteSpace(errorMessage))
+                {
+                    <div class="error-banner" role="alert">
+                        @errorMessage
+                    </div>
+                }
+
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" @bind="name" required placeholder="Your Name" />
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" @bind="phoneNumber" required placeholder="(555) 555-5555" />
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" @bind="email" required placeholder="your.email@example.com" />
+                </div>
+                <div class="form-group">
+                    <label for="contactMethod">Preferred Contact Method</label>
+                    <select id="contactMethod" @bind="contactMethod" required>
+                        <option value="">Select...</option>
+                        @foreach (var method in ContactConfig.Value.ContactMethods)
+                        {
+                            <option value="@method">@method</option>
+                        }
+                    </select>
+                </div>
+
+                @if (ContactConfig.Value.ServiceOptions.Any())
+                {
+                    <div class="form-group">
+                        <label for="serviceType">@ContactConfig.Value.ServiceSelectLabel</label>
+                        <select id="serviceType" @bind="serviceType" required>
+                            <option value="">Select...</option>
+                            @foreach (var option in ContactConfig.Value.ServiceOptions)
+                            {
+                                <option value="@option">@option</option>
+                            }
+                        </select>
+                    </div>
+                }
+
+                @if (ContactConfig.Value.ShowStartDate)
+                {
+                    <div class="form-group">
+                        <label for="startDate">@ContactConfig.Value.StartDateLabel</label>
+                        <input type="date" id="startDate" @bind="startDate" required="@ContactConfig.Value.StartDateRequired" />
+                    </div>
+                }
+
+                <div class="form-group">
+                    <label for="message">Additional Information</label>
+                    <textarea id="message" @bind="message" required rows="5" placeholder="Please share any specific needs or questions..."></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary" disabled="@isSubmitting">
+                    @(isSubmitting ? "Sending..." : "Send Message")
+                </button>
+            </form>
+        }
+    </div>
+</div>
+
+@code {
+    private string name = "";
+    private string phoneNumber = "";
+    private string email = "";
+    private string contactMethod = "";
+    private string serviceType = "";
+    private DateTime? startDate = null;
+    private string message = "";
+    private string botHoneypot = "";
+    private string? errorMessage = null;
+
+    private bool isSubmitted = false;
+    private bool isSubmitting = false;
+
+    private async Task SubmitForm()
+    {
+        isSubmitting = true;
+        errorMessage = null;
+
+        // Bot trap: If filled, fake a successful submission and exit
+        if (!string.IsNullOrEmpty(botHoneypot))
+        {
+            isSubmitted = true;
+            isSubmitting = false;
+            return;
+        }
+
+        var payload = new LeadSubmissionRequest
+        {
+            BusinessId = BusinessConfig.Value.BusinessId,
+            CompanyName = BusinessConfig.Value.CompanyName,
+            Name = name,
+            Phone = phoneNumber,
+            Email = email,
+            PreferredContactMethod = contactMethod,
+            ServiceType = serviceType,
+            PreferredStartDate = startDate?.ToString("yyyy-MM-dd"),
+            Message = message,
+            Honeypot = botHoneypot
+        };
+
+        try
+        {
+            var response = await Http.PostAsJsonAsync(ContactConfig.Value.ApiEndpoint, payload);
+            if (response.IsSuccessStatusCode)
+            {
+                isSubmitted = true;
+            }
+            else
+            {
+                errorMessage = $"We couldn't submit your request right now. Please call us directly at {BusinessConfig.Value.PhoneNumber}.";
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Submission failed: {ex.Message}");
+            errorMessage = $"Network error while sending your message. Please call us directly at {BusinessConfig.Value.PhoneNumber}.";
+        }
+        finally
+        {
+            isSubmitting = false;
+        }
+    }
+
+    private void ResetForm()
+    {
+        name = "";
+        phoneNumber = "";
+        email = "";
+        contactMethod = "";
+        serviceType = "";
+        startDate = null;
+        message = "";
+        botHoneypot = "";
+        errorMessage = null;
+        isSubmitted = false;
+    }
+}

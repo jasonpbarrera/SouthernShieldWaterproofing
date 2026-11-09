@@ -1,0 +1,21 @@
+{
+  "name": "Southern Shield Waterproofing",
+  "short_name": "Southern Shield",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f8fafc",
+  "theme_color": "#156ab7",
+  "prefer_related_applications": false,
+  "icons": [
+    {
+      "src": "android-chrome-512x512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    },
+    {
+      "src": "android-chrome-192x192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    }
+  ]
+}

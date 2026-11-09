@@ -1,0 +1,69 @@
+name: Azure Static Web Apps CI/CD
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+    types: [opened, synchronize, reopened, closed]
+    branches:
+      - main
+      - master
+
+jobs:
+  build_and_deploy_job:
+    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
+    runs-on: ubuntu-latest
+    name: Build and Deploy Job
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+          lfs: false
+
+      # 1. Set up .NET 10 (for Blazor WASM Client and Azure SWA Managed Functions API)
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+
+      # 2. Sync static SEO & PWA files (index.html, sitemap.xml, robots.txt, manifest.webmanifest) from appsettings.json
+      - name: Sync Static SEO & Manifest from appsettings.json
+        run: python3 scripts/sync-client-config.py
+
+      # 3. Verify Managed API builds cleanly on .NET 10
+      - name: Verify Azure Functions API Build
+        run: dotnet build Api/SmallBusinessSite.Api.csproj -c Release
+
+      # 4. Publish the Blazor WebAssembly Client into publish_output
+      - name: Publish Blazor Client
+        run: dotnet publish Client/SmallBusinessSite.Client.csproj -c Release -o publish_output
+
+      # 5. Deploy pre-built Client + Managed API to Azure Static Web Apps (runs automatically when AZURE_STATIC_WEB_APPS_API_TOKEN is configured on a client repo)
+      - name: Build And Deploy
+        id: builddeploy
+        if: env.SWA_TOKEN != ''
+        env:
+          SWA_TOKEN: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
+        uses: Azure/static-web-apps-deploy@v1
+        with:
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          action: "upload"
+          app_location: "publish_output/wwwroot"
+          api_location: "Api"
+          output_location: ""
+          skip_app_build: true
+
+  close_pull_request_job:
+    if: github.event_name == 'pull_request' && github.event.action == 'closed'
+    runs-on: ubuntu-latest
+    name: Close Pull Request Job
+    steps:
+      - name: Close Pull Request
+        id: closepullrequest
+        uses: Azure/static-web-apps-deploy@v1
+        with:
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN }}
+          action: "close"
