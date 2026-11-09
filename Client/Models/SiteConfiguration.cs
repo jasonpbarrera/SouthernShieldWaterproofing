@@ -65,6 +65,16 @@ namespace SmallBusinessSite.Client.Models
         public List<TestimonialItem> Testimonials { get; set; } = new();
         public List<FaqItem> Faqs { get; set; } = new();
         public List<string> ServiceAreas { get; set; } = new();
+        public List<ProjectGalleryItem> Gallery { get; set; } = new();
+    }
+
+    public class ProjectGalleryItem
+    {
+        public string Title { get; set; } = string.Empty;
+        public string Category { get; set; } = string.Empty;
+        public string Location { get; set; } = string.Empty;
+        public string ImageUrl { get; set; } = string.Empty;
+        public string Description { get; set; } = string.Empty;
     }
 
     public class AboutPageSettings
