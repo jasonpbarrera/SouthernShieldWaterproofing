@@ -36,6 +36,21 @@ namespace SmallBusinessSite.Client.Models
         public string Description { get; set; } = string.Empty;
     }
 
+    public class TestimonialItem
+    {
+        public string Author { get; set; } = string.Empty;
+        public string Location { get; set; } = string.Empty;
+        public string ProjectType { get; set; } = string.Empty;
+        public string Quote { get; set; } = string.Empty;
+        public int Rating { get; set; } = 5;
+    }
+
+    public class FaqItem
+    {
+        public string Question { get; set; } = string.Empty;
+        public string Answer { get; set; } = string.Empty;
+    }
+
     public class HomePageSettings
     {
         public string HeroDescription { get; set; } = string.Empty;
@@ -47,6 +62,9 @@ namespace SmallBusinessSite.Client.Models
         public string StoryHeading { get; set; } = "Why We Started";
         public string StoryQuote { get; set; } = string.Empty;
         public string StoryAttribution { get; set; } = string.Empty;
+        public List<TestimonialItem> Testimonials { get; set; } = new();
+        public List<FaqItem> Faqs { get; set; } = new();
+        public List<string> ServiceAreas { get; set; } = new();
     }
 
     public class AboutPageSettings

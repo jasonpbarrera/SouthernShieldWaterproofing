@@ -48,3 +48,70 @@
         </div>
     </section>
 }
+
+<!-- CUSTOMER REVIEWS & TESTIMONIALS -->
+@if (HomeConfig.Value.Testimonials != null && HomeConfig.Value.Testimonials.Any())
+{
+    <section class="reviews-section">
+        <h2>What Our Neighbors Say</h2>
+        <p class="reviews-subtitle">Real feedback from homeowners and builders across Southeast Tennessee</p>
+        <div class="reviews-grid">
+            @foreach (var review in HomeConfig.Value.Testimonials)
+            {
+                <div class="review-card">
+                    <div>
+                        <div class="review-stars">
+                            @for (int i = 0; i < review.Rating; i++)
+                            {
+                                <span>★</span>
+                            }
+                        </div>
+                        <p class="review-quote">"@review.Quote"</p>
+                    </div>
+                    <div>
+                        <div class="review-author">@review.Author</div>
+                        <div class="review-meta">@review.Location • @review.ProjectType</div>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="review-cta">
+            <a href="@BusinessConfig.Value.FacebookUrl" target="_blank" rel="noopener" class="btn btn-secondary">
+                View More Reviews & Photos on Facebook →
+            </a>
+        </div>
+    </section>
+}
+
+<!-- FAQ SECTION -->
+@if (HomeConfig.Value.Faqs != null && HomeConfig.Value.Faqs.Any())
+{
+    <section class="faq-section">
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-list">
+            @foreach (var faq in HomeConfig.Value.Faqs)
+            {
+                <details class="faq-item">
+                    <summary>@faq.Question</summary>
+                    <p>@faq.Answer</p>
+                </details>
+            }
+        </div>
+    </section>
+}
+
+<!-- REGIONAL SERVICE AREAS -->
+@if (HomeConfig.Value.ServiceAreas != null && HomeConfig.Value.ServiceAreas.Any())
+{
+    <section class="service-areas-section">
+        <h2>Serving Southeast Tennessee</h2>
+        <p>Reliable on-site consultations, footer treatments, and French drains throughout our region:</p>
+        <div class="area-tags">
+            @foreach (var area in HomeConfig.Value.ServiceAreas)
+            {
+                <span class="area-tag">📍 @area</span>
+            }
+        </div>
+    </section>
+}
+
