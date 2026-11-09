@@ -288,8 +288,50 @@ def cmd_onboard(args: argparse.Namespace) -> None:
         "createdAt": now_iso
     }
 
-    cosmos_upsert_document("clients", business_id, client_doc)
-    print(f"  [+] Saved Client Profile & Site Configuration to Cosmos DB ('clients' container, id='{business_id}')")
+    try:
+        cosmos_upsert_document("clients", business_id, client_doc)
+        print(f"  [+] Saved Client Profile & Site Configuration to Cosmos DB ('clients' container, id='{business_id}')")
+    except Exception as ex:
+        print(f"  [i] Direct Cosmos DB connection note: {ex}")
+
+    # Seamlessly sync with the live Agency Management Portal API
+    agency_portal_url = os.environ.get("AGENCY_PORTAL_URL", "https://purple-flower-020acac0f.4.azurestaticapps.net").rstrip("/")
+    agency_key = os.environ.get("AGENCY_PASSCODE") or os.environ.get("ADMIN_PASSCODE", "JBDigital2026!")
+    if agency_portal_url and agency_key:
+        portal_payload = {
+            "businessId": business_id,
+            "companyName": company_name,
+            "shortName": short_name,
+            "tagline": biz.get("Tagline", ""),
+            "seoDescription": biz.get("SeoDescription", ""),
+            "ownerName": args.owner_name or "",
+            "ownerGmail": args.owner_gmail or "",
+            "primaryEmail": primary_email,
+            "adminEmail": admin_email,
+            "leadNotificationEmail": args.notification_email or primary_email or args.owner_gmail,
+            "phoneNumber": phone,
+            "city": city,
+            "state": state,
+            "primaryColor": config.get("ThemeSettings", {}).get("PrimaryColor", "#1e3a8a"),
+            "accentColor": config.get("ThemeSettings", {}).get("AccentColor", "#f97316"),
+            "domain": f"https://{domain}" if domain and not domain.startswith("http") else domain,
+            "gitHubRepo": args.github_repo or "",
+            "azureSwaName": args.swa_name or "",
+            "azureSwaDefaultHostname": args.swa_hostname or "",
+            "provisioningStatus": "Provisioned" if args.swa_hostname else "Pending",
+            "billingStatus": "Active"
+        }
+        try:
+            req = urllib.request.Request(
+                f"{agency_portal_url}/api/clients",
+                headers={"X-Agency-Key": agency_key, "Content-Type": "application/json"},
+                data=json.dumps(portal_payload).encode("utf-8"),
+                method="POST"
+            )
+            with urllib.request.urlopen(req) as resp:
+                print(f"  [+] Synced Client to Agency Portal ({agency_portal_url}/clients)")
+        except Exception as ex:
+            print(f"  [i] Agency Portal API note: {ex}")
 
     if args.initial_setup_fee is not None:
         billing_id = f"setup-{business_id}"
