@@ -73,7 +73,7 @@ namespace SmallBusinessSite.Api
                 return req.CreateResponse(HttpStatusCode.InternalServerError);
             }
 
-            string businessId = string.IsNullOrWhiteSpace(input.BusinessId) ? "default" : input.BusinessId.Trim();
+            string businessId = string.IsNullOrWhiteSpace(input.BusinessId) ? "southern-shield-waterproofing" : input.BusinessId.Trim();
 
             // 3. Insert lead document into Azure Cosmos DB `leads` container (partitioned by /businessId)
             var leadDocument = new CosmosLeadDocument
@@ -111,6 +111,22 @@ namespace SmallBusinessSite.Api
             string? recipientEmail = Environment.GetEnvironmentVariable("LEAD_NOTIFICATION_EMAIL");
             string? senderEmail = Environment.GetEnvironmentVariable("BREVO_SENDER_EMAIL");
 
+            // Brevo requires sending from an authenticated custom domain. Freemail addresses (@gmail.com, etc.) cannot be used as outbound senders.
+            bool isSenderFreemail = !string.IsNullOrWhiteSpace(senderEmail) && (
+                senderEmail.EndsWith("@gmail.com", StringComparison.OrdinalIgnoreCase) ||
+                senderEmail.EndsWith("@yahoo.com", StringComparison.OrdinalIgnoreCase) ||
+                senderEmail.EndsWith("@hotmail.com", StringComparison.OrdinalIgnoreCase) ||
+                senderEmail.EndsWith("@outlook.com", StringComparison.OrdinalIgnoreCase));
+
+            if (isSenderFreemail)
+            {
+                if (string.IsNullOrWhiteSpace(recipientEmail))
+                {
+                    recipientEmail = senderEmail;
+                }
+                senderEmail = null;
+            }
+
             if (string.IsNullOrWhiteSpace(brevoApiKey) || string.IsNullOrWhiteSpace(recipientEmail) || string.IsNullOrWhiteSpace(senderEmail))
             {
                 if (TryGetCosmosCredentials(out string cEndpoint, out string cKey, out string cDbId))
@@ -124,7 +140,7 @@ namespace SmallBusinessSite.Api
                         if (string.IsNullOrWhiteSpace(recipientEmail))
                             recipientEmail = !string.IsNullOrWhiteSpace(clientDoc.LeadNotificationEmail) ? clientDoc.LeadNotificationEmail : clientDoc.PrimaryEmail;
 
-                        if (string.IsNullOrWhiteSpace(senderEmail))
+                        if (string.IsNullOrWhiteSpace(senderEmail) && !string.IsNullOrWhiteSpace(clientDoc.BrevoSenderEmail))
                             senderEmail = clientDoc.BrevoSenderEmail;
                     }
                 }
@@ -132,7 +148,12 @@ namespace SmallBusinessSite.Api
 
             if (string.IsNullOrWhiteSpace(senderEmail))
             {
-                senderEmail = "info@jbdigitalservices.net";
+                senderEmail = "info@southernshieldwaterproofing.com";
+            }
+
+            if (string.IsNullOrWhiteSpace(recipientEmail))
+            {
+                recipientEmail = "southernshieldwaterproofing@gmail.com";
             }
 
             if (!string.IsNullOrWhiteSpace(brevoApiKey) && !string.IsNullOrWhiteSpace(recipientEmail))
@@ -230,13 +251,48 @@ namespace SmallBusinessSite.Api
             request.Headers.Add("x-ms-documentdb-partitionkey", JsonSerializer.Serialize(new[] { businessId }));
 
             var response = await _httpClient.SendAsync(request);
-            if (!response.IsSuccessStatusCode)
+            if (response.IsSuccessStatusCode)
             {
-                return null;
+                var clientDoc = await response.Content.ReadFromJsonAsync<CosmosClientRecord>(JsonOptions);
+                if (clientDoc?.IsActive == true) return clientDoc;
             }
 
-            var clientDoc = await response.Content.ReadFromJsonAsync<CosmosClientRecord>(JsonOptions);
-            return clientDoc?.IsActive == true ? clientDoc : null;
+            // Fallback to cross-partition query
+            try
+            {
+                string qResourceLink = $"dbs/{databaseId}/colls/clients";
+                string qRequestUri = $"{cosmosEndpoint}/{qResourceLink}/docs";
+                string qDate = DateTime.UtcNow.ToString("r", CultureInfo.InvariantCulture);
+                string qAuth = GenerateCosmosAuthToken("post", "docs", qResourceLink, qDate, cosmosKey);
+
+                using var qReq = new HttpRequestMessage(HttpMethod.Post, qRequestUri);
+                qReq.Headers.Add("Authorization", qAuth);
+                qReq.Headers.Add("x-ms-date", qDate);
+                qReq.Headers.Add("x-ms-version", "2018-12-31");
+                qReq.Headers.Add("x-ms-documentdb-isquery", "True");
+                qReq.Headers.Add("x-ms-documentdb-query-enablecrosspartition", "True");
+
+                string bodyJson = JsonSerializer.Serialize(new { query = $"SELECT * FROM c WHERE c.businessId = '{businessId.Replace("'", "''")}'", parameters = Array.Empty<object>() });
+                qReq.Content = new StringContent(bodyJson, Encoding.UTF8, "application/query+json");
+                qReq.Content.Headers.ContentType!.CharSet = null;
+
+                var qResp = await _httpClient.SendAsync(qReq);
+                if (qResp.IsSuccessStatusCode)
+                {
+                    using var qDoc = await JsonDocument.ParseAsync(await qResp.Content.ReadAsStreamAsync());
+                    if (qDoc.RootElement.TryGetProperty("Documents", out var docs) && docs.GetArrayLength() > 0)
+                    {
+                        var first = docs[0];
+                        return JsonSerializer.Deserialize<CosmosClientRecord>(first.GetRawText(), JsonOptions);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogWarning(ex, "Failed to query client record for {BusinessId}", businessId);
+            }
+
+            return null;
         }
 
         private static string GenerateCosmosAuthToken(
@@ -260,7 +316,11 @@ namespace SmallBusinessSite.Api
             string recipientEmail,
             LeadSubmissionDto lead)
         {
-            string company = string.IsNullOrWhiteSpace(lead.CompanyName) ? lead.BusinessId : lead.CompanyName;
+            string company = !string.IsNullOrWhiteSpace(lead.CompanyName)
+                ? lead.CompanyName
+                : (!string.IsNullOrWhiteSpace(lead.BusinessId) && lead.BusinessId != "default" && lead.BusinessId != "southern-shield-waterproofing"
+                    ? lead.BusinessId
+                    : "Southern Shield Waterproofing");
             string htmlBody = $@"
                 <h2>New Website Inquiry — {WebUtility.HtmlEncode(company)}</h2>
                 <table style='border-collapse:collapse;font-family:sans-serif;'>
