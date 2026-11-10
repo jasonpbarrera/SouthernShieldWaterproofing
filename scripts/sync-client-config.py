@@ -33,6 +33,7 @@ def main() -> None:
     tagline = biz.get("Tagline", "")
     seo_description = biz.get("SeoDescription") or home.get("HeroDescription") or tagline
     domain = (biz.get("Domain") or "https://your-client-domain.com").rstrip("/")
+    primary_email = biz.get("PrimaryEmail", "")
     phone = biz.get("PhoneNumber", "")
     city = biz.get("City", "")
     state = biz.get("State", "")
