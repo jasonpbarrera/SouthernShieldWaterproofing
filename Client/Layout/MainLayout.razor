@@ -1,4 +1,5 @@
 @inherits LayoutComponentBase
+@using System.Reflection
 @inject IOptions<BusinessSettings> BusinessConfig
 @inject IOptions<ThemeSettings> ThemeConfig
 @inject IOptions<AboutPageSettings> AboutConfig
@@ -65,6 +66,19 @@
         </div>
         <div class="footer-bottom">
             <p>&copy; @DateTime.Now.Year @BusinessConfig.Value.CompanyName. All rights reserved.</p>
+            <span class="jb-footer-credit">
+                v@(AppVersion) &middot; @BuildDate &middot; Powered by <a href="https://jbdigitaltechnologies.net" target="_blank" rel="noopener noreferrer">JB Digital Technologies</a>
+            </span>
         </div>
     </footer>
 </div>
+
+@code {
+    private static readonly string AppVersion =
+        typeof(MainLayout).Assembly.GetName().Version?.ToString(3) ?? "1.0.0";
+    private static readonly string BuildDate =
+        typeof(MainLayout).Assembly
+            .GetCustomAttributes<AssemblyMetadataAttribute>()
+            .FirstOrDefault(a => a.Key == "BuildTimestamp")?.Value
+        ?? DateTime.UtcNow.ToString("MMM d, yyyy");
+}
