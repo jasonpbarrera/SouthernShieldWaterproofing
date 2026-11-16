@@ -8,7 +8,7 @@
 }
 
 .about-hero-header {
-    background: linear-gradient(135deg, #0b192c 0%, #152238 100%);
+    background: linear-gradient(135deg, #0a1118 0%, #151f2b 100%);
     color: #ffffff;
     padding: 4rem 0 3.5rem 0;
     border-bottom: 4px solid var(--brand-accent);
@@ -36,7 +36,7 @@
     background: #ffffff;
     border: 1px solid #e2e8f0;
     border-radius: 8px;
-    box-shadow: 0 10px 30px rgba(11, 25, 44, 0.06);
+    box-shadow: 0 10px 30px rgba(10, 17, 24, 0.06);
     display: flex;
     flex-wrap: wrap;
     margin-top: -2rem;
@@ -48,7 +48,7 @@
 
 .founder-badge-column {
     flex: 0 0 300px;
-    background: linear-gradient(180deg, #111d2e 0%, #0b192c 100%);
+    background: linear-gradient(180deg, #151f2b 0%, #0a1118 100%);
     color: #ffffff;
     padding: 3rem 2rem;
     display: flex;
@@ -66,7 +66,7 @@
     margin-bottom: 1.5rem;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
     border: 3px solid var(--brand-accent);
-    background-color: #0b192c;
+    background-color: #0a1118;
 }
 
 .founder-portrait {
@@ -111,7 +111,7 @@
     font-weight: 800;
     letter-spacing: 0.05em;
     width: 100%;
-    box-shadow: 0 4px 12px rgba(230, 92, 15, 0.3);
+    box-shadow: 0 4px 12px rgba(2, 132, 199, 0.3);
     text-align: center;
 }
 
@@ -174,7 +174,7 @@
     border: 1px solid #e2e8f0;
     border-radius: 8px;
     overflow: hidden;
-    box-shadow: 0 8px 25px rgba(11, 25, 44, 0.05);
+    box-shadow: 0 8px 25px rgba(10, 17, 24, 0.05);
     display: flex;
     flex-wrap: wrap;
     margin-bottom: 4rem;
@@ -183,7 +183,7 @@
 .family-img-box {
     flex: 1 1 380px;
     min-height: 320px;
-    background-color: #0b192c;
+    background-color: #0a1118;
 }
 
 .family-img-box img {
@@ -273,13 +273,13 @@
 
 .showcase-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 10px 25px rgba(11, 25, 44, 0.1);
+    box-shadow: 0 10px 25px rgba(10, 17, 24, 0.1);
     border-color: var(--brand-accent);
 }
 
 .showcase-img-box {
     height: 240px;
-    background-color: #0b192c;
+    background-color: #0a1118;
     overflow: hidden;
 }
 
@@ -326,7 +326,7 @@
 
 /* CTA BAR */
 .about-cta-bar {
-    background: linear-gradient(135deg, #0b192c 0%, #152238 100%);
+    background: linear-gradient(135deg, #0a1118 0%, #151f2b 100%);
     border-radius: 8px;
     border-left: 6px solid var(--brand-accent);
     padding: 3rem 2.5rem;
@@ -336,7 +336,7 @@
     align-items: center;
     flex-wrap: wrap;
     gap: 2rem;
-    box-shadow: 0 12px 30px rgba(11, 25, 44, 0.15);
+    box-shadow: 0 12px 30px rgba(10, 17, 24, 0.15);
 }
 
 .about-cta-bar h3 {

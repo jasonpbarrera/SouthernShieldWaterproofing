@@ -8,7 +8,7 @@
 }
 
 .services-hero-header {
-    background: linear-gradient(135deg, #0b192c 0%, #152238 100%);
+    background: linear-gradient(135deg, #0a1118 0%, #151f2b 100%);
     color: #ffffff;
     padding: 4rem 0 3.5rem 0;
     border-bottom: 4px solid var(--brand-accent);
@@ -45,7 +45,7 @@
     border: 1px solid #e2e8f0;
     border-radius: 8px;
     overflow: hidden;
-    box-shadow: 0 8px 25px rgba(11, 25, 44, 0.05);
+    box-shadow: 0 8px 25px rgba(10, 17, 24, 0.05);
     display: flex;
     flex-wrap: wrap;
     transition: transform 0.25s ease, box-shadow 0.25s ease;
@@ -53,7 +53,7 @@
 
 .service-detail-card:hover {
     transform: translateY(-3px);
-    box-shadow: 0 12px 35px rgba(11, 25, 44, 0.09);
+    box-shadow: 0 12px 35px rgba(10, 17, 24, 0.09);
     border-color: var(--brand-accent);
 }
 
@@ -65,7 +65,7 @@
     flex: 1 1 420px;
     min-height: 340px;
     position: relative;
-    background-color: #0b192c;
+    background-color: #0a1118;
 }
 
 .service-img-col img {
@@ -79,9 +79,9 @@
     position: absolute;
     top: 1rem;
     left: 1rem;
-    background: rgba(11, 25, 44, 0.9);
+    background: rgba(10, 17, 24, 0.9);
     color: var(--brand-accent-glow);
-    border: 1px solid rgba(255, 120, 40, 0.4);
+    border: 1px solid rgba(56, 189, 248, 0.4);
     font-family: var(--font-display);
     font-size: 0.85rem;
     font-weight: 800;
@@ -145,7 +145,7 @@
 
 /* BOTTOM CTA BANNER */
 .services-cta-banner {
-    background: linear-gradient(135deg, #0b192c 0%, #152238 100%);
+    background: linear-gradient(135deg, #0a1118 0%, #151f2b 100%);
     border-radius: 8px;
     border-left: 6px solid var(--brand-accent);
     padding: 3.5rem 3rem;
@@ -155,7 +155,7 @@
     align-items: center;
     flex-wrap: wrap;
     gap: 2rem;
-    box-shadow: 0 12px 30px rgba(11, 25, 44, 0.15);
+    box-shadow: 0 12px 30px rgba(10, 17, 24, 0.15);
 }
 
 .services-cta-banner h2 {
