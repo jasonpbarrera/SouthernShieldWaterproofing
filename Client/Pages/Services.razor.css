@@ -8,14 +8,14 @@
 }
 
 .services-hero-header {
-    background: linear-gradient(135deg, #0a1118 0%, #151f2b 100%);
+    background: linear-gradient(135deg, #0b1726 0%, #112236 100%);
     color: #ffffff;
     padding: 4rem 0 3.5rem 0;
     border-bottom: 4px solid var(--brand-accent);
 }
 
 .services-hero-title {
-    font-family: var(--font-display);
+    font-family: var(--font-heading);
     font-size: clamp(2.6rem, 5vw, 4rem);
     font-weight: 900;
     color: #ffffff;
@@ -45,7 +45,7 @@
     border: 1px solid #e2e8f0;
     border-radius: 8px;
     overflow: hidden;
-    box-shadow: 0 8px 25px rgba(10, 17, 24, 0.05);
+    box-shadow: 0 8px 25px rgba(11, 23, 38, 0.05);
     display: flex;
     flex-wrap: wrap;
     transition: transform 0.25s ease, box-shadow 0.25s ease;
@@ -53,7 +53,7 @@
 
 .service-detail-card:hover {
     transform: translateY(-3px);
-    box-shadow: 0 12px 35px rgba(10, 17, 24, 0.09);
+    box-shadow: 0 12px 35px rgba(11, 23, 38, 0.09);
     border-color: var(--brand-accent);
 }
 
@@ -65,7 +65,7 @@
     flex: 1 1 420px;
     min-height: 340px;
     position: relative;
-    background-color: #0a1118;
+    background-color: #0b1726;
 }
 
 .service-img-col img {
@@ -79,10 +79,10 @@
     position: absolute;
     top: 1rem;
     left: 1rem;
-    background: rgba(10, 17, 24, 0.9);
+    background: rgba(11, 23, 38, 0.9);
     color: var(--brand-accent-glow);
     border: 1px solid rgba(56, 189, 248, 0.4);
-    font-family: var(--font-display);
+    font-family: var(--font-heading);
     font-size: 0.85rem;
     font-weight: 800;
     letter-spacing: 0.06em;
@@ -101,7 +101,7 @@
 }
 
 .service-content-col h2 {
-    font-family: var(--font-display);
+    font-family: var(--font-heading);
     font-size: clamp(1.8rem, 3vw, 2.3rem);
     color: var(--brand-primary);
     margin-bottom: 1rem;
@@ -145,7 +145,7 @@
 
 /* BOTTOM CTA BANNER */
 .services-cta-banner {
-    background: linear-gradient(135deg, #0a1118 0%, #151f2b 100%);
+    background: linear-gradient(135deg, #0b1726 0%, #112236 100%);
     border-radius: 8px;
     border-left: 6px solid var(--brand-accent);
     padding: 3.5rem 3rem;
@@ -155,11 +155,11 @@
     align-items: center;
     flex-wrap: wrap;
     gap: 2rem;
-    box-shadow: 0 12px 30px rgba(10, 17, 24, 0.15);
+    box-shadow: 0 12px 30px rgba(11, 23, 38, 0.15);
 }
 
 .services-cta-banner h2 {
-    font-family: var(--font-display);
+    font-family: var(--font-heading);
     font-size: clamp(2rem, 3.5vw, 2.6rem);
     color: #ffffff;
     margin-bottom: 0.5rem;

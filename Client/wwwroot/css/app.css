@@ -1,31 +1,32 @@
-@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,700;0,800;0,900;1,700;1,800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Teko:wght@600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:ital,wght@0,600;0,700;0,800;0,900;1,700;1,800&display=swap');
 
 /* ==========================================================================
-   SOUTHERN SHIELD WATERPROOFING — INDUSTRIAL FOUNDATION SHIELD DESIGN SYSTEM
+   SOUTHERN SHIELD WATERPROOFING — BESPOKE FOUNDATION SHIELD DESIGN SYSTEM
    ========================================================================== */
 :root {
-    --brand-primary: #0a1118;          /* Deep Steel Carbon */
-    --brand-secondary: #151f2b;        /* Structural Steel Slate */
+    --brand-primary: #0b1726;          /* Deep Midnight Foundation Navy */
+    --brand-secondary: #112236;        /* Fortified Foundation Slate */
     --brand-surface: #ffffff;
     --brand-surface-muted: #f8fafc;
-    --brand-surface-card: #0f1722;      /* Dark Formwork / Foundation Card */
-    --brand-surface-light: #f1f5f9;     /* Cured Masonry Concrete Grey */
-    --brand-accent: #0284c7;           /* Hydraulic Heavy Equipment / Shield Blue */
-    --brand-accent-hover: #0369a1;
-    --brand-accent-glow: #38bdf8;      /* High-Vis Electric Blue */
-    --brand-shield-blue: #0284c7;      /* Waterproofing Shield Blue */
+    --brand-surface-card: #112236;      /* Dark Foundation Card Surface */
+    --brand-surface-light: #f0f4f9;     /* Light Foundation Bedding Tint */
+    --brand-accent: #156ab7;           /* Official Royal Shield Blue (Exact Logo Match) */
+    --brand-accent-hover: #0e5292;      /* Deep Royal Blue */
+    --brand-accent-glow: #38bdf8;      /* Clean Electric Blue */
+    --brand-accent-light: #e8f2fa;     /* Soft Shield Blue Tint */
+    --brand-shield-blue: #156ab7;      /* Waterproofing Shield Blue */
     --brand-shield-light: #38bdf8;
-    --brand-hazard: #f59e0b;           /* Safety Construction Amber */
-    --brand-border: #223244;
+    --brand-hazard: #f59e0b;           /* Safety Construction Gold */
+    --brand-border: #1e3550;           /* Deep Navy Joint Border */
     --brand-border-light: #e2e8f0;
     --text-dark: #0f172a;
     --text-muted: #64748b;
     --text-light: #f8fafc;
     --text-light-muted: #94a3b8;
     --white: #ffffff;
-    --font-display: 'Barlow Condensed', sans-serif;
-    --font-heading: 'Teko', sans-serif;
-    --font-body: 'Plus Jakarta Sans', -apple-system, sans-serif;
+    --font-heading: 'Montserrat', sans-serif;
+    --font-display: 'Montserrat', sans-serif;
+    --font-body: 'Inter', -apple-system, sans-serif;
 }
 
 /* =========================================
@@ -208,21 +209,22 @@ a:hover {
 }
 
 .brand-title {
-    font-family: var(--font-display);
-    font-size: 1.65rem;
+    font-family: var(--font-heading);
+    font-size: 1.45rem;
     font-weight: 900;
     color: var(--brand-primary);
     line-height: 1;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.02em;
 }
 
 .brand-subtitle {
-    font-size: 0.75rem;
+    font-family: var(--font-heading);
+    font-size: 0.7rem;
     font-weight: 700;
     color: var(--brand-accent);
     text-transform: uppercase;
-    letter-spacing: 0.08em;
-    margin-top: 0.2rem;
+    letter-spacing: 0.06em;
+    margin-top: 0.25rem;
 }
 
 .main-navigation {
@@ -232,11 +234,11 @@ a:hover {
 }
 
 .main-navigation a {
-    font-family: var(--font-display);
-    font-size: 1.15rem;
-    font-weight: 800;
+    font-family: var(--font-heading);
+    font-size: 0.95rem;
+    font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.03em;
     color: var(--brand-secondary);
     padding: 0.35rem 0;
     position: relative;
@@ -267,67 +269,66 @@ a:hover {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    background: var(--brand-primary);
+    background: var(--brand-accent);
     color: #ffffff !important;
     border: 2px solid var(--brand-accent);
     padding: 0.6rem 1.25rem;
-    border-radius: 4px;
-    font-family: var(--font-display);
-    font-size: 1.1rem;
+    border-radius: 6px;
+    font-family: var(--font-heading);
+    font-size: 0.95rem;
     font-weight: 800;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
-    box-shadow: 0 4px 12px rgba(2, 132, 199, 0.2);
+    letter-spacing: 0.04em;
+    box-shadow: 0 4px 12px rgba(21, 106, 183, 0.25);
     transition: all 0.2s ease;
 }
 
 .header-quote-cta:hover {
-    background: var(--brand-accent);
-    border-color: var(--brand-accent);
+    background: var(--brand-accent-hover);
+    border-color: var(--brand-accent-hover);
     color: #ffffff !important;
     transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(2, 132, 199, 0.35);
+    box-shadow: 0 6px 16px rgba(21, 106, 183, 0.4);
 }
 
 /* =========================================
-   BUTTON SYSTEM (HEAVY INDUSTRIAL)
+   BUTTON SYSTEM (SOUTHERN SHIELD BESPOKE)
    ========================================= */
 .btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-    padding: 0.85rem 1.85rem;
-    border-radius: 4px;
-    font-family: var(--font-display);
-    font-size: 1.25rem;
+    padding: 0.85rem 1.75rem;
+    border-radius: 6px;
+    font-family: var(--font-heading);
+    font-size: 1rem;
     font-weight: 800;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.04em;
     transition: all 0.2s ease;
     cursor: pointer;
     border: none;
-    line-height: 1;
+    line-height: 1.2;
 }
 
 .btn-primary {
-    background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+    background: linear-gradient(135deg, #156ab7 0%, #0e5292 100%);
     color: #ffffff !important;
-    box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.3);
-    border: 1px solid #38bdf8;
+    box-shadow: 0 4px 14px rgba(21, 106, 183, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .btn-primary:hover {
-    background: linear-gradient(135deg, #0369a1 0%, #075985 100%);
-    box-shadow: 0 6px 20px rgba(2, 132, 199, 0.45);
+    background: linear-gradient(135deg, #0e5292 0%, #093c6d 100%);
+    box-shadow: 0 6px 20px rgba(21, 106, 183, 0.45);
     transform: translateY(-2px);
 }
 
 .btn-secondary {
-    background: rgba(15, 23, 42, 0.85);
+    background: var(--brand-primary);
     color: #ffffff !important;
-    border: 2px solid var(--brand-accent-glow);
-    backdrop-filter: blur(4px);
+    border: 2px solid var(--brand-accent);
 }
 
 .btn-secondary:hover {
