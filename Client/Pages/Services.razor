@@ -2,47 +2,122 @@
 @inject IOptions<BusinessSettings> BusinessConfig
 @inject IOptions<ServicesPageSettings> ServicesConfig
 
-<PageTitle>Services | @BusinessConfig.Value.ShortName</PageTitle>
+<PageTitle>Services &amp; Waterproofing Capabilities | @BusinessConfig.Value.ShortName</PageTitle>
 
-<div class="services-container">
-    <div class="services-header">
-        <h1>@ServicesConfig.Value.Heading</h1>
-        <p class="lead-text">@ServicesConfig.Value.LeadText</p>
-    </div>
-
-    <!-- Core Services Grid -->
-    <div class="services-grid">
-        @foreach (var service in ServicesConfig.Value.Services)
-        {
-            <div class="service-card">
-                <div class="service-icon">@service.Icon</div>
-                <h3>@service.Title</h3>
-                <p>@service.Description</p>
-            </div>
-        }
-    </div>
-
-    <!-- Community / Spotlight Section -->
-    @if (!string.IsNullOrWhiteSpace(ServicesConfig.Value.SpotlightHeading))
-    {
-        <div class="community-section">
-            <h2>@ServicesConfig.Value.SpotlightHeading</h2>
-            <p>@ServicesConfig.Value.SpotlightText</p>
+<div class="services-page-wrapper">
+    <!-- HERO HEADER -->
+    <section class="services-hero-header">
+        <div class="content-container">
+            <div class="industrial-kicker industrial-kicker-hazard">Commercial &amp; Residential Waterproofing</div>
+            <h1 class="services-hero-title">ENGINEERED WATERPROOFING CAPABILITIES</h1>
+            <p class="services-hero-lead">
+                Commercial-grade polymer spray membranes, precision footing cold-joint treatments, engineered French drainage systems, and high-density backfill armor for Southeast Tennessee foundations.
+            </p>
         </div>
-    }
+    </section>
 
-    <!-- Optional Hiring Banner -->
-    @if (ServicesConfig.Value.ShowHiringBanner)
-    {
-        <div class="hiring-banner">
-            <div class="hiring-content">
-                <h2>@ServicesConfig.Value.HiringHeading</h2>
-                <p>@ServicesConfig.Value.HiringText</p>
-                <div class="hiring-actions">
-                    <a href="tel:@BusinessConfig.Value.PhoneNumber" class="btn btn-primary">Call to Apply</a>
-                    <a href="mailto:@BusinessConfig.Value.AdminEmail" class="btn btn-secondary">Email Resume</a>
+    <div class="content-container">
+        <!-- SERVICES DETAILED CARDS -->
+        <div class="services-detail-list">
+            <!-- 1. SPRAY MEMBRANE -->
+            <div class="service-detail-card">
+                <div class="service-img-col">
+                    <img src="images/projects/project-1.jpg" alt="Commercial Polymer Rubberized Spray Membrane on Foundation Wall" loading="lazy" />
+                    <span class="service-chip">Spray-Applied Polymer</span>
+                </div>
+                <div class="service-content-col">
+                    <div class="industrial-kicker">Core Foundation Defense</div>
+                    <h2>COMMERCIAL SPRAY-APPLIED WALL MEMBRANE</h2>
+                    <p>
+                        High-performance elastomeric polymer coatings spray-applied under high pressure directly to exterior foundation walls, curing into a continuous seamless rubberized barrier that flexes with soil settling and withstands brutal hydrostatic pressure.
+                    </p>
+                    <ul class="service-feature-list">
+                        <li><strong>100% Seamless Barrier:</strong> Eliminates seams, cold laps, and peeling sheet joints.</li>
+                        <li><strong>Elastomeric Flexibility:</strong> Expands and contracts across seasonal freeze-thaw cycles without cracking.</li>
+                        <li><strong>High-Pressure Spray:</strong> Fills every porous masonry void, aggregate pocket, and mortar seam.</li>
+                        <li><strong>Molecular Adhesion:</strong> Bonds tenaciously to cured poured concrete and CMU block walls.</li>
+                    </ul>
+                    <a href="/contact" class="btn btn-primary" style="margin-top: 1.25rem;">Request Membrane Quote</a>
+                </div>
+            </div>
+
+            <!-- 2. FOOTING & COLD-JOINT SEALING -->
+            <div class="service-detail-card reverse">
+                <div class="service-img-col">
+                    <img src="images/projects/project-4.jpg" alt="Foundation Footing Treatment and Cold-Joint Keyway Sealing" loading="lazy" />
+                    <span class="service-chip">Cold-Joint Waterstop</span>
+                </div>
+                <div class="service-content-col">
+                    <div class="industrial-kicker">Subterranean Waterstop</div>
+                    <h2>FOUNDATION FOOTING TREATMENT &amp; CAPILLARY WATERSTOP</h2>
+                    <p>
+                        The horizontal cold joint where your foundation wall meets the concrete footing is the single most vulnerable point of water intrusion. We excavate, clean, prep, and coat footings with specialized elastomeric waterstop seals, stopping upward capillary wicking before water enters your basement or crawl space.
+                    </p>
+                    <ul class="service-feature-list">
+                        <li><strong>Capillary Wicking Block:</strong> Stops moisture rising from wet subgrade soil up into the wall.</li>
+                        <li><strong>Keyway Cold-Joint Seal:</strong> Permanently seals the vulnerable interface between footer and wall.</li>
+                        <li><strong>Deep Excavation Trench Prep:</strong> Cleaned of loose mud and debris for pristine polymer bonding.</li>
+                        <li><strong>Code &amp; Builder Compliant:</strong> Engineered to meet demanding custom home builder specifications.</li>
+                    </ul>
+                    <a href="/contact" class="btn btn-primary" style="margin-top: 1.25rem;">Discuss Footing Treatment</a>
+                </div>
+            </div>
+
+            <!-- 3. FRENCH DRAINAGE -->
+            <div class="service-detail-card">
+                <div class="service-img-col">
+                    <img src="images/projects/project-3.jpg" alt="Engineered Footing French Drain Installation with Washed River Gravel" loading="lazy" />
+                    <span class="service-chip">Hydrostatic Relief</span>
+                </div>
+                <div class="service-content-col">
+                    <div class="industrial-kicker industrial-kicker-hazard">Sub-Surface Drainage</div>
+                    <h2>ENGINEERED FOOTING FRENCH DRAINAGE SYSTEMS</h2>
+                    <p>
+                        Waterproofing alone isn't enough if standing water pools against your foundation. We engineer laser-graded French drainage systems along the footing, featuring heavy perforated piping encased in washed river gravel and geotextile filter fabric to route water away by continuous gravity flow.
+                    </p>
+                    <ul class="service-feature-list">
+                        <li><strong>Washed River Stone Bedding:</strong> Prevents silt clogging and provides maximum hydraulic flow.</li>
+                        <li><strong>Heavy Perforated Piping:</strong> Corrugated and smooth-interior pipes built for high crush strength.</li>
+                        <li><strong>Geotextile Fabric Wrap:</strong> Blocks clay fines and silt from choking the drainage envelope.</li>
+                        <li><strong>Gravity Runoff Routing:</strong> Safely directs captured footing water out to daylight or discharge basins.</li>
+                    </ul>
+                    <a href="/contact" class="btn btn-primary" style="margin-top: 1.25rem;">Plan Drainage System</a>
+                </div>
+            </div>
+
+            <!-- 4. BACKFILL ARMOR -->
+            <div class="service-detail-card reverse">
+                <div class="service-img-col">
+                    <img src="images/projects/project-2.jpg" alt="Dimpled Drainage Board and Heavy Backfill Armor Sheet" loading="lazy" />
+                    <span class="service-chip">Backfill Armor</span>
+                </div>
+                <div class="service-content-col">
+                    <div class="industrial-kicker">Heavy Equipment Defense</div>
+                    <h2>DIMPLED DRAINAGE BOARD &amp; BACKFILL ARMOR</h2>
+                    <p>
+                        When excavators backfill heavy Tennessee clay, shale, and crushed rock against fresh waterproofing, sharp stones can puncture unprotected membrane coatings. We install high-density polyethylene dimpled drainage boards that shield the membrane while creating a relief drainage channel down to the footing drain.
+                    </p>
+                    <ul class="service-feature-list">
+                        <li><strong>Rock &amp; Shale Armor:</strong> Deflects sharp backfill rocks and roots from penetrating the membrane.</li>
+                        <li><strong>Dimpled Air-Gap Flow:</strong> Provides a continuous vertical drainage channel for descending water.</li>
+                        <li><strong>Hydrostatic Cushion:</strong> Absorbs soil expansion pressures and machine backfill compaction forces.</li>
+                        <li><strong>Rot &amp; Chemical Proof:</strong> Unaffected by soil acids, alkalis, bacteria, and subterranean fungi.</li>
+                    </ul>
+                    <a href="/contact" class="btn btn-primary" style="margin-top: 1.25rem;">Get Armor Board Pricing</a>
                 </div>
             </div>
         </div>
-    }
+
+        <!-- BOTTOM CALL TO ACTION -->
+        <div class="services-cta-banner">
+            <div>
+                <h2>READY TO SHIELD YOUR UPCOMING FOUNDATION?</h2>
+                <p>Call Scotty Barrera directly to discuss your foundation plans, footing specs, or schedule an on-site evaluation.</p>
+            </div>
+            <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                <a href="tel:@BusinessConfig.Value.PhoneNumber" class="btn btn-primary">Call (423) 661-9481</a>
+                <a href="/contact" class="btn btn-secondary">Request Free Estimate</a>
+            </div>
+        </div>
+    </div>
 </div>

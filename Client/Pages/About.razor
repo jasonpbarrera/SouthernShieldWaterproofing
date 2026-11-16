@@ -2,73 +2,158 @@
 @inject IOptions<BusinessSettings> BusinessConfig
 @inject IOptions<AboutPageSettings> AboutConfig
 
-<PageTitle>@AboutConfig.Value.NavTitle | @BusinessConfig.Value.ShortName</PageTitle>
+<PageTitle>About Scotty Barrera | @BusinessConfig.Value.ShortName</PageTitle>
 
-<div class="about-container">
-    <div class="intro-section">
-        <h1 class="script-heading">@AboutConfig.Value.Heading</h1>
-        <h2>@AboutConfig.Value.Subheading</h2>
-        <p class="lead-text">@AboutConfig.Value.LeadText</p>
-    </div>
-
-    <div class="founder-profile" style="display: flex; flex-wrap: wrap; gap: 1.5rem; align-items: center; margin-bottom: 2.5rem; background: #ffffff; padding: 1.5rem 2rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.04); border-left: 5px solid var(--brand-accent);">
-        <img src="images/scotty-barrera.jpg" alt="Scotty & Gracie Barrera" style="width: 130px; height: 130px; border-radius: 50%; object-fit: cover; border: 3px solid var(--brand-accent); box-shadow: 0 2px 8px rgba(0,0,0,0.1);" />
-        <div style="flex: 1; min-width: 250px;">
-            <h3 style="color: var(--brand-primary); margin: 0 0 0.25rem 0; font-size: 1.35rem; font-weight: bold;">Scotty & Gracie Barrera</h3>
-            <p style="color: var(--brand-accent); font-weight: 600; margin: 0 0 0.5rem 0; font-size: 0.95rem;">Family Owned & Operated • Southeast Tennessee</p>
-            <p style="margin: 0; color: #4b5563; font-size: 0.95rem; line-height: 1.6;">Locally owned and operated right here in Southeast Tennessee. Scotty personally oversees every foundation footing preparation, waterproofing membrane application, and French drain project across Chattanooga, Cleveland, and surrounding areas.</p>
+<div class="about-page-wrapper">
+    <!-- HERO HEADER -->
+    <section class="about-hero-header">
+        <div class="content-container">
+            <div class="industrial-kicker industrial-kicker-hazard">On-Site Leadership &amp; Foundation Defense</div>
+            <h1 class="about-hero-title">MEET SCOTTY BARRERA</h1>
+            <p class="about-hero-lead">
+                Owner, operator, and on-site foundation waterproofing specialist behind Southern Shield Waterproofing in Southeast Tennessee.
+            </p>
         </div>
-    </div>
+    </section>
 
-    <div class="family-story-card" style="background: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.04); margin-bottom: 2.5rem; display: flex; flex-wrap: wrap; border-top: 4px solid var(--brand-primary);">
-        <div style="flex: 1 1 350px; max-height: 320px; overflow: hidden;">
-            <img src="images/scotty-family.jpg" alt="Scotty Barrera Family" style="width: 100%; height: 100%; object-fit: cover;" />
-        </div>
-        <div style="flex: 1 1 350px; padding: 2rem; display: flex; flex-direction: column; justify-content: center;">
-            <span style="color: var(--brand-accent); font-weight: 700; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.05em; margin-bottom: 0.5rem;">Rooted in Southeast Tennessee</span>
-            <h3 style="color: var(--brand-primary); font-size: 1.4rem; margin: 0 0 1rem 0;">Family Values, Uncompromising Protection</h3>
-            <p style="color: #4b5563; line-height: 1.7; margin: 0 0 1rem 0;">Southern Shield Waterproofing is built on family values, hard work, and genuine care for our neighbors. When you work with us, you deal directly with Scotty—from the first estimate to the final inspection—ensuring your foundation is protected as if it were our own.</p>
-            <div style="display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; color: var(--brand-primary); font-weight: 600; font-size: 0.95rem;">
-                <span>✓ Direct Owner Oversight</span>
-                <span>✓ Honest, Upfront Pricing</span>
-                <span>✓ Built for Tennessee Terrain</span>
+    <div class="content-container">
+        <!-- FOUNDER SPOTLIGHT CARD -->
+        <div class="founder-spotlight-card">
+            <div class="founder-badge-column">
+                <div class="founder-portrait-box">
+                    <img src="images/scotty-barrera.jpg" alt="Scotty Barrera, Owner & Founder" class="founder-portrait" />
+                </div>
+                <div class="founder-id-box">
+                    <h3>SCOTTY BARRERA</h3>
+                    <span class="founder-role">Owner &amp; Operator</span>
+                    <span class="founder-location">📍 Cleveland &amp; Chattanooga, TN</span>
+                    <a href="tel:@BusinessConfig.Value.PhoneNumber" class="founder-phone-btn">
+                        📞 (423) 661-9481
+                    </a>
+                </div>
+            </div>
+
+            <div class="founder-bio-column">
+                <div class="industrial-kicker">Hands-On Waterproofing Contractor</div>
+                <h2>"QUALITY AND INTEGRITY FROM FOOTING TO FINISH."</h2>
+                <p>
+                    When you hire Southern Shield Waterproofing, you don't get a middleman salesman or an inexperienced subcontracted crew. <strong>Scotty Barrera is on the job site personally managing every phase of your project</strong>—from the deep footing trench cleanout and cold-joint waterstop application to high-pressure elastomeric membrane spraying and gravel-bedded French drain routing.
+                </p>
+                <p>
+                    Based in Bradley County and serving Cleveland, Chattanooga, Ooltewah, and across Southeast Tennessee, Scotty founded Southern Shield on an uncompromising commitment to structural foundation protection. Whether sealing custom mountain homes in Signal Mountain, waterproofing multi-tier basements in Chattanooga, or installing heavy backfill armor boards for builders in Cleveland, Scotty brings specialized craftsmanship and honesty to every square foot.
+                </p>
+
+                <div class="founder-creds-grid">
+                    <div class="cred-item">
+                        <strong>100% Owner Supervised</strong>
+                        <span>Scotty is on-site verifying surface prep, dry-mil coating thickness, and slope.</span>
+                    </div>
+                    <div class="cred-item">
+                        <strong>Commercial Polymer Barrier</strong>
+                        <span>Seamless elastomeric spray membranes engineered for brutal hydrostatic pressure.</span>
+                    </div>
+                    <div class="cred-item">
+                        <strong>Turnkey Moisture Defense</strong>
+                        <span>Footing waterstops, wall membranes, gravel-bedded French drains, and armor boards.</span>
+                    </div>
+                    <div class="cred-item">
+                        <strong>East Tennessee Terrain Specialists</strong>
+                        <span>Deep expertise with regional red clay, chert, limestone shelves, and mountain runoff.</span>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="content-grid">
-        <div class="card who-i-am">
-            <h3>@AboutConfig.Value.WhoIAmTitle</h3>
-            <ul>
-                @foreach (var item in AboutConfig.Value.WhoIAmBullets)
-                {
-                    <li>@item</li>
-                }
-            </ul>
+        <!-- FAMILY VALUES CARD -->
+        <div class="family-values-card">
+            <div class="family-img-box">
+                <img src="images/scotty-family.jpg" alt="Scotty & Gracie Barrera Family" loading="lazy" />
+            </div>
+            <div class="family-content-box">
+                <div class="industrial-kicker">Rooted in Southeast Tennessee</div>
+                <h2>FAMILY VALUES, UNCOMPROMISING PROTECTION</h2>
+                <p>
+                    Southern Shield Waterproofing is locally owned and operated right here at home by Scotty and Gracie Barrera. We treat every foundation, basement, and crawlspace as if it were sheltering our own family.
+                </p>
+                <p>
+                    When you contact Southern Shield, you speak directly with Scotty. No high-pressure sales pitches, no confusing corporate tiers—just honest advice, transparent proposals, and dependable execution that keeps your home bone-dry for decades.
+                </p>
+                <div class="family-badges-list">
+                    <span>✓ Direct Owner Oversight</span>
+                    <span>✓ Honest, Upfront Pricing</span>
+                    <span>✓ Built for Tennessee Terrain</span>
+                    <span>✓ Licensed &amp; Insured</span>
+                </div>
+            </div>
         </div>
 
-        <div class="card why-i-started">
-            <h3>@AboutConfig.Value.WhyStartedTitle</h3>
-            @foreach (var p in AboutConfig.Value.WhyStartedParagraphs)
-            {
-                <p>@p</p>
-            }
+        <!-- ON-SITE CRAFTSMANSHIP SHOWCASE -->
+        <div class="craftsmanship-showcase-section">
+            <div class="showcase-header">
+                <div class="industrial-kicker">Precision Moisture Defense</div>
+                <h2>THE SOUTHERN SHIELD DIFFERENCE ON THE JOB SITE</h2>
+                <p>
+                    See the commercial spray equipment, continuous elastomeric placement, and finished foundation protection systems built by Scotty and the crew across Southeast Tennessee.
+                </p>
+            </div>
+
+            <div class="showcase-dual-cards">
+                <div class="showcase-card">
+                    <div class="showcase-img-box">
+                        <img src="images/projects/project-1.jpg" alt="Seamless Spray-Applied Wall Membrane by Scotty Barrera" loading="lazy" />
+                    </div>
+                    <div class="showcase-body">
+                        <h3>Seamless Polymer Wall Membrane</h3>
+                        <p>High-capacity spray applicator coats porous CMU blocks and mortar seams in a continuous, flexible rubberized membrane that stops subterranean hydrostatic water penetration.</p>
+                        <span class="showcase-tag">📍 Chattanooga, TN</span>
+                    </div>
+                </div>
+
+                <div class="showcase-card">
+                    <div class="showcase-img-box">
+                        <img src="images/projects/project-4.jpg" alt="Deep Footing Trench Excavation and Cold Joint Seal" loading="lazy" />
+                    </div>
+                    <div class="showcase-body">
+                        <h3>Footing Cold-Joint Sealing</h3>
+                        <p>Excavated foundation footing cleared of soil and prepped with specialized elastomeric waterstop seals, permanently eliminating upward capillary wicking at the wall base.</p>
+                        <span class="showcase-tag">📍 Signal Mountain, TN</span>
+                    </div>
+                </div>
+
+                <div class="showcase-card">
+                    <div class="showcase-img-box">
+                        <img src="images/projects/project-3.jpg" alt="Footing French Drain System with Washed Stone" loading="lazy" />
+                    </div>
+                    <div class="showcase-body">
+                        <h3>Engineered French Drainage</h3>
+                        <p>Perforated footing pipe encased in clean washed river gravel and geotextile filter fabric to capture groundwater and discharge it safely away by continuous gravity flow.</p>
+                        <span class="showcase-tag">📍 Ooltewah, TN</span>
+                    </div>
+                </div>
+
+                <div class="showcase-card">
+                    <div class="showcase-img-box">
+                        <img src="images/projects/project-2.jpg" alt="Dimpled Drainage Armor Board Installation" loading="lazy" />
+                    </div>
+                    <div class="showcase-body">
+                        <h3>Heavy Backfill Armor Shield</h3>
+                        <p>High-density dimpled drainage core sheets protecting freshly cured membrane coatings from sharp rock punctures, roots, and heavy equipment soil backfill compaction.</p>
+                        <span class="showcase-tag">📍 Cleveland, TN</span>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
 
-    <div class="closing-section">
-        @if (!string.IsNullOrWhiteSpace(AboutConfig.Value.ClosingQuote))
-        {
-            <p class="calling-text">"@AboutConfig.Value.ClosingQuote"</p>
-        }
-        <p>@AboutConfig.Value.ClosingText</p>
-        <h4>@AboutConfig.Value.ThankYouNote</h4>
-
-        <div class="core-values">
-            @foreach (var val in AboutConfig.Value.CoreValues)
-            {
-                <span>✦ @val</span>
-            }
+        <!-- CALL TO ACTION -->
+        <div class="about-cta-bar">
+            <div>
+                <h3>DISCUSS YOUR UPCOMING FOUNDATION WITH SCOTTY</h3>
+                <p>Have blueprints, new construction plans, or moisture questions about your foundation? Call Scotty directly today.</p>
+            </div>
+            <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                <a href="tel:@BusinessConfig.Value.PhoneNumber" class="btn btn-primary">Call Scotty: @BusinessConfig.Value.PhoneNumber</a>
+                <a href="/contact" class="btn btn-secondary">Submit Project Plans</a>
+            </div>
         </div>
     </div>
 </div>

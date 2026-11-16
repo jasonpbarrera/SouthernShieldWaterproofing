@@ -1,0 +1,305 @@
+@namespace SmallBusinessSite.Client.Components
+
+@switch (Normalize(Name))
+{
+    case "membrane":
+    case "wall-membrane":
+    case "polymer":
+    case "waterproofing":
+    case "spray":
+        <!-- Commercial Polymer Rubberized Spray Membrane Sealing Foundation Wall -->
+        <svg class="@CssClass" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <!-- Concrete foundation wall block -->
+            <rect x="6" y="8" width="18" height="34" rx="1.5" fill="currentColor" fill-opacity="0.1" stroke-width="3" />
+            <!-- Mortar joint / block course lines -->
+            <line x1="6" y1="18" x2="24" y2="18" stroke-width="2" stroke-dasharray="2 3" />
+            <line x1="6" y1="28" x2="24" y2="28" stroke-width="2" stroke-dasharray="2 3" />
+            <!-- Thick continuous rubberized elastomeric membrane layer applied to wall face -->
+            <path d="M24 8V42" stroke="currentColor" stroke-width="5" />
+            <!-- Commercial spray gun wand and nozzle -->
+            <line x1="42" y1="12" x2="34" y2="22" stroke-width="3" />
+            <line x1="42" y1="12" x2="45" y2="9" stroke-width="3.5" />
+            <path d="M34 22L31 20L32 25L35 24Z" fill="currentColor" />
+            <!-- Spray mist fan coating the wall -->
+            <path d="M31 22L24 16M31 22L24 22M31 22L24 28" stroke="currentColor" stroke-width="2" stroke-dasharray="1.5 2" />
+            <!-- Water droplets bouncing off the sealed barrier -->
+            <circle cx="28" cy="14" r="1.5" fill="currentColor" />
+            <circle cx="29" cy="32" r="1.5" fill="currentColor" />
+            <!-- Grade / Footing baseline -->
+            <line x1="2" y1="42" x2="46" y2="42" stroke-width="4" />
+        </svg>
+        break;
+
+    case "footing":
+    case "footer":
+    case "cold-joint":
+    case "capillary":
+        <!-- Poured Footing Cold-Joint Sealer & Waterstop Barrier -->
+        <svg class="@CssClass" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <!-- Concrete footing spread base -->
+            <rect x="4" y="30" width="40" height="14" rx="1.5" fill="currentColor" fill-opacity="0.12" stroke-width="3" />
+            <!-- Vertical foundation wall standing on footing -->
+            <rect x="14" y="6" width="20" height="24" rx="1" fill="currentColor" fill-opacity="0.08" stroke-width="3" />
+            <!-- Keyway groove / cold-joint boundary line -->
+            <line x1="14" y1="30" x2="34" y2="30" stroke-width="3.5" />
+            <!-- High-performance cold-joint elastomer waterstop bead -->
+            <path d="M12 28C13 32 17 32 18 32H30C31 32 35 32 36 28" stroke="currentColor" stroke-width="3" />
+            <!-- Ground moisture wicking arrows blocked at footing -->
+            <path d="M8 24V18M8 18L5 21M8 18L11 21" stroke-width="2" stroke-linecap="round" />
+            <line x1="5" y1="26" x2="11" y2="26" stroke-width="2" />
+            <!-- Footing rebar anchor studs -->
+            <line x1="20" y1="22" x2="20" y2="36" stroke-width="2" stroke-dasharray="2 3" />
+            <line x1="28" y1="22" x2="28" y2="36" stroke-width="2" stroke-dasharray="2 3" />
+            <!-- Virgin soil earth line -->
+            <line x1="2" y1="44" x2="46" y2="44" stroke-width="4" />
+        </svg>
+        break;
+
+    case "french-drain":
+    case "drainage":
+    case "perforated-pipe":
+    case "drain":
+        <!-- Engineered Footing French Drain & Filter Fabric Gravel Trench -->
+        <svg class="@CssClass" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <!-- Excavated gravel trench profile -->
+            <path d="M8 8V38C8 40.5 10 42 12 42H36C38 42 40 40.5 40 38V8" fill="currentColor" fill-opacity="0.08" stroke-width="2" stroke-dasharray="3 3" />
+            <!-- Large perforated drain pipe centered at bottom of trench -->
+            <circle cx="24" cy="30" r="9" fill="currentColor" fill-opacity="0.15" stroke-width="3" />
+            <circle cx="24" cy="30" r="4.5" stroke-width="2" />
+            <!-- Pipe laser perforations / water intake slots -->
+            <circle cx="24" cy="23" r="1.2" fill="currentColor" />
+            <circle cx="31" cy="30" r="1.2" fill="currentColor" />
+            <circle cx="24" cy="37" r="1.2" fill="currentColor" />
+            <circle cx="17" cy="30" r="1.2" fill="currentColor" />
+            <!-- Washed aggregate river rock bed stones -->
+            <circle cx="13" cy="22" r="2" fill="currentColor" fill-opacity="0.6" stroke="none" />
+            <circle cx="13" cy="34" r="2.2" fill="currentColor" fill-opacity="0.6" stroke="none" />
+            <circle cx="35" cy="22" r="2" fill="currentColor" fill-opacity="0.6" stroke="none" />
+            <circle cx="35" cy="34" r="2.2" fill="currentColor" fill-opacity="0.6" stroke="none" />
+            <circle cx="24" cy="14" r="1.8" fill="currentColor" fill-opacity="0.6" stroke="none" />
+            <!-- Downward water filtration arrows into the drainage channel -->
+            <path d="M18 6L18 12M18 12L16 10M18 12L20 10" stroke-width="2" />
+            <path d="M30 6L30 12M30 12L28 10M30 12L32 10" stroke-width="2" />
+        </svg>
+        break;
+
+    case "backfill":
+    case "dimple-board":
+    case "board":
+    case "armor":
+        <!-- High-Density Dimpled Drainage Board & Heavy Backfill Armor -->
+        <svg class="@CssClass" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <!-- Concrete foundation wall base -->
+            <rect x="6" y="8" width="10" height="34" fill="currentColor" fill-opacity="0.1" stroke-width="2.5" />
+            <!-- Polymer membrane layer -->
+            <line x1="16" y1="8" x2="16" y2="42" stroke-width="3" />
+            <!-- Heavy-duty dimpled drainage core sheet -->
+            <rect x="19" y="8" width="14" height="34" rx="1.5" fill="currentColor" fill-opacity="0.15" stroke-width="2.5" />
+            <!-- Engineered drainage dimples pattern -->
+            <circle cx="23" cy="14" r="1.8" fill="currentColor" />
+            <circle cx="29" cy="19" r="1.8" fill="currentColor" />
+            <circle cx="23" cy="25" r="1.8" fill="currentColor" />
+            <circle cx="29" cy="30" r="1.8" fill="currentColor" />
+            <circle cx="23" cy="36" r="1.8" fill="currentColor" />
+            <!-- Angular sharp backfill rocks deflected by armor face -->
+            <path d="M38 12L44 16L41 22L36 17Z" fill="currentColor" fill-opacity="0.25" stroke-width="2" />
+            <path d="M37 26L43 29L39 36L34 32Z" fill="currentColor" fill-opacity="0.25" stroke-width="2" />
+            <!-- Deflection bounce indicator -->
+            <path d="M35 19L33 19" stroke-width="2" />
+            <path d="M34 31L32 31" stroke-width="2" />
+            <!-- Base footing ground line -->
+            <line x1="2" y1="42" x2="46" y2="42" stroke-width="4" />
+        </svg>
+        break;
+
+    case "shield":
+    case "fortress":
+    case "barrier":
+    case "protection":
+        <!-- Heavy Faceted Fortress Waterproofing Shield -->
+        <svg class="@CssClass" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <!-- Heavy outer armor shield -->
+            <path d="M24 4L40 9V22C40 33 24 43 24 43C24 43 8 33 8 22V9L24 4Z" fill="currentColor" fill-opacity="0.12" stroke-width="3.5" />
+            <!-- Inner reinforced core barrier -->
+            <path d="M24 10L33 14V22C33 30 24 37 24 37C24 37 15 30 15 22V14L24 10Z" stroke-width="2" />
+            <!-- Central moisture deflection crosshair & water droplet -->
+            <path d="M24 16C24 16 19 23 19 26C19 28.76 21.24 31 24 31C26.76 31 29 28.76 29 26C29 23 24 16 24 16Z" fill="currentColor" stroke="none" />
+            <!-- Industrial perimeter bolt studs -->
+            <circle cx="24" cy="7" r="1.5" fill="currentColor" />
+            <circle cx="36" cy="11" r="1.5" fill="currentColor" />
+            <circle cx="12" cy="11" r="1.5" fill="currentColor" />
+            <circle cx="37" cy="22" r="1.5" fill="currentColor" />
+            <circle cx="11" cy="22" r="1.5" fill="currentColor" />
+        </svg>
+        break;
+
+    case "crawlspace":
+    case "encapsulation":
+    case "vapor-barrier":
+        <!-- Crawlspace Moisture Encapsulation & Heavy 20-Mil Vapor Barrier -->
+        <svg class="@CssClass" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <!-- Crawlspace foundation masonry wall and floor frame -->
+            <path d="M6 10V38H42" stroke-width="3" />
+            <line x1="6" y1="10" x2="16" y2="10" stroke-width="3" />
+            <!-- Continuous heavy vapor barrier film lining wall & floor -->
+            <path d="M10 14V34H42" stroke="currentColor" stroke-width="4" stroke-dasharray="6 2" />
+            <!-- Termination bar mechanical fasteners along top wall -->
+            <circle cx="10" cy="16" r="1.5" fill="currentColor" />
+            <circle cx="10" cy="22" r="1.5" fill="currentColor" />
+            <circle cx="10" cy="28" r="1.5" fill="currentColor" />
+            <!-- Sealed tape joint seam on floor barrier -->
+            <line x1="26" y1="31" x2="26" y2="37" stroke-width="3" />
+            <!-- Ground moisture evaporation blocked beneath barrier -->
+            <path d="M20 42C20 38 22 38 22 36" stroke-width="2" />
+            <path d="M32 42C32 38 34 38 34 36" stroke-width="2" />
+            <!-- Floor joist overhead -->
+            <line x1="16" y1="6" x2="44" y2="6" stroke-width="3.5" />
+            <rect x="22" y="6" width="6" height="4" fill="currentColor" />
+            <rect x="34" y="6" width="6" height="4" fill="currentColor" />
+        </svg>
+        break;
+
+    case "sump-pump":
+    case "basin":
+    case "discharge":
+        <!-- Subterranean Sump Basin & Cast-Iron Discharge System -->
+        <svg class="@CssClass" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <!-- Subterranean pit / basin cylinder -->
+            <path d="M10 14H38V38C38 41 35 43 32 43H16C13 43 10 41 10 38V14Z" fill="currentColor" fill-opacity="0.1" stroke-width="3" />
+            <!-- Heavy sealed basin lid -->
+            <rect x="8" y="10" width="32" height="4" rx="1" fill="currentColor" stroke-width="2" />
+            <!-- Submersible pump body in pit base -->
+            <rect x="18" y="26" width="12" height="13" rx="2" fill="currentColor" fill-opacity="0.25" stroke-width="2.5" />
+            <!-- Vertical PVC discharge pipe expelling water -->
+            <line x1="22" y1="26" x2="22" y2="6" stroke-width="3" />
+            <path d="M22 6H34" stroke-width="3" />
+            <!-- Inline check valve -->
+            <rect x="20" y="15" width="4" height="6" fill="currentColor" />
+            <!-- Float switch sensor -->
+            <circle cx="34" cy="30" r="2.5" fill="currentColor" />
+            <line x1="30" y1="28" x2="34" y2="30" stroke-width="1.5" />
+            <!-- Expelled water stream -->
+            <path d="M37 6H44M42 4L45 6L42 8" stroke-width="2" />
+        </svg>
+        break;
+
+    case "excavator":
+    case "trench":
+    case "dig":
+        <!-- Tracked Heavy Excavator Trenching Foundation Footing -->
+        <svg class="@CssClass" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <!-- Track assembly -->
+            <rect x="4" y="34" width="22" height="8" rx="4" fill="currentColor" fill-opacity="0.15" stroke-width="3" />
+            <circle cx="8" cy="38" r="2" fill="currentColor" />
+            <circle cx="15" cy="38" r="2" fill="currentColor" />
+            <circle cx="22" cy="38" r="2" fill="currentColor" />
+            <!-- Operator cab & engine hood -->
+            <path d="M7 34V22H18V34H7Z" stroke-width="2.5" />
+            <path d="M12 22V25H16" stroke-width="2" />
+            <!-- Articulated hydraulic boom -->
+            <line x1="17" y1="24" x2="27" y2="12" stroke-width="3.5" />
+            <circle cx="27" cy="12" r="2" fill="currentColor" />
+            <!-- Stick / Arm -->
+            <line x1="27" y1="12" x2="37" y2="22" stroke-width="3" />
+            <circle cx="37" cy="22" r="1.5" fill="currentColor" />
+            <!-- Serrated foundation trenching bucket -->
+            <path d="M37 22L42 27L39 33L34 30L37 22Z" fill="currentColor" fill-opacity="0.2" stroke-width="2.5" />
+            <line x1="42" y1="27" x2="44" y2="29" stroke-width="2" />
+            <line x1="40" y1="30" x2="42" y2="32" stroke-width="2" />
+            <line x1="39" y1="33" x2="41" y2="35" stroke-width="2" />
+            <!-- Foundation trench bank cut -->
+            <path d="M26 42H46V36" stroke-width="3" />
+        </svg>
+        break;
+
+    case "estimate":
+    case "inspection":
+    case "blueprint":
+    case "quote":
+        <!-- Blueprint Grid, Spirit Level & Precision Scope Inspection -->
+        <svg class="@CssClass" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <!-- Technical foundation blueprint plan -->
+            <rect x="6" y="8" width="36" height="32" rx="2" fill="currentColor" fill-opacity="0.08" stroke-width="3" />
+            <!-- Blueprint grid layout lines -->
+            <line x1="6" y1="18" x2="42" y2="18" stroke-width="1.5" stroke-dasharray="2 2" />
+            <line x1="6" y1="28" x2="42" y2="28" stroke-width="1.5" stroke-dasharray="2 2" />
+            <line x1="18" y1="8" x2="18" y2="40" stroke-width="1.5" stroke-dasharray="2 2" />
+            <line x1="30" y1="8" x2="30" y2="40" stroke-width="1.5" stroke-dasharray="2 2" />
+            <!-- Diagonal contractor spirit level tool across blueprint -->
+            <rect x="14" y="20" width="22" height="6" rx="1.5" transform="rotate(-25 14 20)" fill="currentColor" fill-opacity="0.25" stroke-width="2.5" />
+            <!-- Level bubble vial -->
+            <circle cx="25" cy="22" r="1.5" fill="currentColor" />
+            <!-- Verified scope inspection checkmark -->
+            <path d="M30 32L35 37L44 26" stroke-width="3.5" />
+        </svg>
+        break;
+
+    case "guarantee":
+    case "warranty":
+    case "trusted":
+    case "quality":
+        <!-- Heavy Industrial Certification Seal with Lifetime Shield Insignia -->
+        <svg class="@CssClass" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <!-- Scalloped gear / heavy outer seal ring -->
+            <circle cx="24" cy="22" r="16" fill="currentColor" fill-opacity="0.1" stroke-width="3" />
+            <circle cx="24" cy="22" r="12" stroke-width="1.5" stroke-dasharray="2 2" />
+            <!-- Central verified foundation checkmark -->
+            <path d="M18 22L22 26L30 18" stroke-width="3.5" />
+            <!-- Hanging certification ribbon tails -->
+            <path d="M16 35L13 44L20 40L24 44L24 38" fill="currentColor" fill-opacity="0.2" stroke-width="2.5" />
+            <path d="M32 35L35 44L28 40L24 44L24 38" fill="currentColor" fill-opacity="0.2" stroke-width="2.5" />
+        </svg>
+        break;
+
+    case "phone":
+    case "call":
+        <!-- Industrial Heavy Rugged Handset -->
+        <svg class="@CssClass" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 8C12.5 8 10 10.5 10 13C10 27 21 38 35 38C37.5 38 40 35.5 40 34L33 27L28 32C22 29 19 26 16 20L21 15L14 8Z" fill="currentColor" fill-opacity="0.15" stroke-width="3" />
+            <line x1="30" y1="10" x2="36" y2="10" stroke-width="2.5" />
+            <line x1="33" y1="7" x2="33" y2="13" stroke-width="2.5" />
+        </svg>
+        break;
+
+    case "location":
+    case "pin":
+        <!-- Precision Industrial Map Coordinate Pin -->
+        <svg class="@CssClass" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M24 4C15.16 4 8 11.16 8 20C8 31 24 44 24 44C24 44 40 31 40 20C40 11.16 32.84 4 24 4Z" fill="currentColor" fill-opacity="0.15" stroke-width="3" />
+            <circle cx="24" cy="20" r="5" stroke-width="2.5" />
+        </svg>
+        break;
+
+    default:
+        <!-- Default Heavy Protective Foundation Shield -->
+        <svg class="@CssClass" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M24 4L38 9V22C38 32 24 42 24 42C24 42 10 32 10 22V9L24 4Z" fill="currentColor" fill-opacity="0.12" stroke-width="3" />
+            <path d="M24 12V34M16 22H32" stroke-width="2.5" />
+            <circle cx="24" cy="22" r="3" fill="currentColor" />
+        </svg>
+        break;
+}
+
+@code {
+    [Parameter] public string Name { get; set; } = string.Empty;
+    [Parameter] public string CssClass { get; set; } = "w-8 h-8";
+
+    private string Normalize(string input)
+    {
+        if (string.IsNullOrWhiteSpace(input)) return string.Empty;
+        var s = input.Trim().ToLowerInvariant();
+        if (s.Contains("membrane") || s.Contains("spray") || s.Contains("polymer") || s.Contains("waterproof")) return "membrane";
+        if (s.Contains("footing") || s.Contains("footer") || s.Contains("cold-joint") || s.Contains("capillary")) return "footing";
+        if (s.Contains("french") || s.Contains("drain") || s.Contains("pipe") || s.Contains("perforat")) return "french-drain";
+        if (s.Contains("backfill") || s.Contains("dimple") || s.Contains("board") || s.Contains("armor")) return "backfill";
+        if (s.Contains("crawl") || s.Contains("vapor") || s.Contains("encapsul")) return "crawlspace";
+        if (s.Contains("sump") || s.Contains("pump") || s.Contains("basin") || s.Contains("discharge")) return "sump-pump";
+        if (s.Contains("excavat") || s.Contains("trench") || s.Contains("dig")) return "excavator";
+        if (s.Contains("estimate") || s.Contains("inspection") || s.Contains("blueprint") || s.Contains("quote")) return "estimate";
+        if (s.Contains("guarantee") || s.Contains("warranty") || s.Contains("trusted") || s.Contains("quality")) return "guarantee";
+        if (s.Contains("shield") || s.Contains("barrier") || s.Contains("protect")) return "shield";
+        if (s.Contains("phone") || s.Contains("call")) return "phone";
+        if (s.Contains("location") || s.Contains("pin")) return "location";
+        return s;
+    }
+}

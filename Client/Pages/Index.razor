@@ -2,153 +2,301 @@
 @inject IOptions<BusinessSettings> BusinessConfig
 @inject IOptions<HomePageSettings> HomeConfig
 
-<PageTitle>@BusinessConfig.Value.ShortName | @BusinessConfig.Value.CompanyName</PageTitle>
+<PageTitle>@BusinessConfig.Value.ShortName | Foundation Waterproofing, Footing Treatment & French Drains</PageTitle>
 
 <!-- HERO SECTION -->
-<section class="hero-section">
-    <div class="hero-content">
-        <h1>@BusinessConfig.Value.CompanyName</h1>
-        <p class="tagline">@BusinessConfig.Value.Tagline</p>
-        <p class="hero-description">@HomeConfig.Value.HeroDescription</p>
-        <div class="hero-actions">
-            <a href="/contact" class="btn btn-primary">@HomeConfig.Value.PrimaryCtaText</a>
-            <a href="/about" class="btn btn-secondary">@HomeConfig.Value.SecondaryCtaText</a>
+<section class="industrial-hero">
+    <div class="hero-overlay-container">
+        <div class="hero-content-box">
+            <div class="hero-kicker-badge">
+                <span class="pulse-indicator"></span>
+                <span>COMMERCIAL FOUNDATION WATERPROOFING • SOUTHEAST TN</span>
+            </div>
+
+            <h1 class="hero-title">
+                ARMOR YOUR FOUNDATION.<br />
+                <span class="text-accent-gradient">BUILT TO STAY BONE-DRY.</span>
+            </h1>
+
+            <p class="hero-lead">
+                Commercial-grade spray-applied elastomeric polymer membranes, precision footing cold-joint seals, engineered French drainage systems, and high-density backfill armor protecting homes and foundations across Cleveland, Chattanooga, and Southeast Tennessee.
+            </p>
+
+            <div class="hero-actions">
+                <a href="/contact" class="btn btn-primary hero-btn">
+                    <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+                    <span>Request Free Estimate</span>
+                </a>
+                <a href="tel:@BusinessConfig.Value.PhoneNumber" class="btn btn-secondary hero-btn">
+                    <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24c1.12.37 2.33.57 3.58.57a1 1 0 011 1V20a1 1 0 01-1 1C10.61 21 3 13.39 3 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.46.57 3.58a1 1 0 01-.25 1.01l-2.2 2.2z"/></svg>
+                    <span>Call Scotty: @BusinessConfig.Value.PhoneNumber</span>
+                </a>
+            </div>
+
+            <div class="hero-guarantee-bar">
+                <span>✓ 100% Seamless Polymer Barrier</span>
+                <span>✓ Footing Cold-Joint Waterstop</span>
+                <span>✓ Engineered French Drainage</span>
+                <span>✓ Heavy Backfill Dimple Armor</span>
+            </div>
         </div>
     </div>
 </section>
 
-<!-- VALUES SECTION -->
-@if (!string.IsNullOrWhiteSpace(HomeConfig.Value.ValuesHeading))
-{
-    <section class="values-section">
-        <h2>@HomeConfig.Value.ValuesHeading</h2>
-        <p class="values-subtitle">@HomeConfig.Value.ValuesSubtitle</p>
-    </section>
-}
-
-<!-- MISSION PILLARS SECTION -->
-<section class="pillars-section">
-    @foreach (var pillar in HomeConfig.Value.Pillars)
-    {
-        <div class="pillar-card">
-            <div class="icon-placeholder">@pillar.Icon</div>
-            <h3>@pillar.Title</h3>
-            <p>@pillar.Description</p>
+<!-- INDUSTRIAL SPECS TICKER BAR -->
+<section class="specs-bar">
+    <div class="specs-grid">
+        <div class="spec-card">
+            <span class="spec-value">100% SEAMLESS</span>
+            <span class="spec-label">Elastomeric Polymer Membrane</span>
+            <span class="spec-sub">Zero weak seams or porous joints</span>
         </div>
-    }
+        <div class="spec-card">
+            <span class="spec-value">COLD-JOINT SEAL</span>
+            <span class="spec-label">Footing Keyway Waterstop</span>
+            <span class="spec-sub">Blocks upward capillary moisture wicking</span>
+        </div>
+        <div class="spec-card">
+            <span class="spec-value">GRAVITY FLOW</span>
+            <span class="spec-label">Engineered French Drains</span>
+            <span class="spec-sub">Perforated pipe + washed river stone</span>
+        </div>
+        <div class="spec-card">
+            <span class="spec-value">ARMOR SHIELD</span>
+            <span class="spec-label">Dimpled Drainage Board</span>
+            <span class="spec-sub">Deflects sharp rock backfill &amp; shale</span>
+        </div>
+    </div>
 </section>
 
-@if (!string.IsNullOrWhiteSpace(HomeConfig.Value.StoryQuote))
-{
-    <section class="our-story-section">
-        <div class="container">
-            <h2>@HomeConfig.Value.StoryHeading</h2>
-            <p class="our-story-quote">"@HomeConfig.Value.StoryQuote"</p>
-            <p><strong>- @HomeConfig.Value.StoryAttribution</strong></p>
+<!-- CORE CAPABILITIES (PILLARS) -->
+<section class="capabilities-section">
+    <div class="content-container">
+        <div class="section-header-block">
+            <div class="industrial-kicker">Engineered Subterranean Foundation Protection</div>
+            <h2 class="section-title">COMMERCIAL WATERPROOFING. ZERO MOISTURE INTRUSION.</h2>
+            <p class="section-lead">
+                Untreated concrete and thin asphalt tar crack under hydrostatic soil pressure. Southern Shield seals footings, walls, and drainage paths with commercial elastomeric barriers that permanently lock water out.
+            </p>
         </div>
-    </section>
-}
 
-<!-- JOB-SITE GALLERY & RECENT WORK -->
+        <div class="capabilities-grid">
+            @foreach (var pillar in HomeConfig.Value.Pillars)
+            {
+                <div class="capability-card">
+                    <div class="capability-icon-box">
+                        <ShieldIcon Name="@pillar.Icon" CssClass="shield-svg" />
+                    </div>
+                    <div class="capability-content">
+                        <h3>@pillar.Title</h3>
+                        <p>@pillar.Description</p>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+<!-- WATERPROOFING TRUTH COMPARISON -->
+<section class="comparison-section">
+    <div class="content-container">
+        <div class="section-header-block text-center">
+            <div class="industrial-kicker industrial-kicker-hazard">The Engineering Truth</div>
+            <h2 class="section-title text-light">COMMERCIAL POLYMER SYSTEM VS. DIY ASPHALT TAR</h2>
+            <p class="section-lead text-light-muted">
+                Understanding why modern builders and knowledgeable homeowners demand engineered polymer membranes and footing French drains over cheap dampproofing tar.
+            </p>
+        </div>
+
+        <div class="comparison-table-wrapper">
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Protective Standard</th>
+                        <th class="col-highlight">Southern Shield Commercial System</th>
+                        <th class="col-block">Standard Asphalt Tar / Untreated</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Flexural Elasticity &amp; Settling</strong></td>
+                        <td class="col-highlight"><span class="badge-check">✓ Seamless Elastomeric Polymer</span> — Stretches over hairline foundation settling cracks without tearing or leaking.</td>
+                        <td class="col-block"><span class="badge-cross">✕ Brittle Dampproofing Tar</span> — Dries out, oxidizes, and cracks within 2 to 3 years under soil movement.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Footing Cold-Joint Protection</strong></td>
+                        <td class="col-highlight"><span class="badge-check">✓ Waterproof Keyway Waterstop</span> — Seals the vulnerable seam where wall meets footing against capillary wicking.</td>
+                        <td class="col-block"><span class="badge-cross">✕ Completely Ignored Joint</span> — Water wicks straight up through untreated footing into slab and crawl space.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Hydrostatic Pressure Relief</strong></td>
+                        <td class="col-highlight"><span class="badge-check">✓ Gravity-Flow French Drain</span> — Perforated pipe wrapped in washed river stone channels water away before it builds pressure.</td>
+                        <td class="col-block"><span class="badge-cross">✕ Standing Hydrostatic Head</span> — Groundwater pools against foundation, forcing moisture through pores and joints.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Backfill Rock Puncture Defense</strong></td>
+                        <td class="col-highlight"><span class="badge-check">✓ Dimpled Armor Drainage Sheet</span> — Heavy polyethylene board cushions wall and provides relief drainage flow channels.</td>
+                        <td class="col-block"><span class="badge-cross">✕ Direct Sharp Rock Impact</span> — Heavy backfill rocks gouge and puncture unprotected coating immediately upon grading.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Long-Term Peace of Mind</strong></td>
+                        <td class="col-highlight"><span class="badge-check">✓ On-Site Owner Supervision</span> — Scotty personally inspects and verifies every spray coat, footing seam, and stone trench.</td>
+                        <td class="col-block"><span class="badge-cross">✕ Costly Remediation Later</span> — Excavating and repairing a failed foundation after the home is built costs $15,000–$30,000+.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<!-- ON-SITE WORK & PROJECT GALLERY -->
 <section class="gallery-section">
-    <h2>On-Site Work & Project Gallery</h2>
-    <p class="gallery-subtitle">Real foundation and drainage installations across Southeast Tennessee</p>
-
-    @if (HomeConfig.Value.Gallery != null && HomeConfig.Value.Gallery.Any())
-    {
-        <div class="gallery-grid">
-            @foreach (var item in HomeConfig.Value.Gallery)
-            {
-                <div class="gallery-card">
-                    @if (!string.IsNullOrWhiteSpace(item.ImageUrl))
-                    {
-                        <div class="gallery-img-wrapper">
-                            <img src="@item.ImageUrl" alt="@item.Title" loading="lazy" />
-                        </div>
-                    }
-                    <div class="gallery-info">
-                        <span class="gallery-badge">@item.Category</span>
-                        <h3>@item.Title</h3>
-                        <p class="gallery-location">📍 @item.Location</p>
-                        <p class="gallery-desc">@item.Description</p>
-                    </div>
-                </div>
-            }
+    <div class="content-container">
+        <div class="section-header-block">
+            <div class="industrial-kicker">Authentic Regional Project Portfolio</div>
+            <h2 class="section-title">JOB-SITE WORK &amp; FOUNDATION GALLERY</h2>
+            <p class="section-lead">
+                Every photo below represents actual foundation waterproofing, footing cold-joint treatments, and French drain installations completed by Scotty Barrera and the Southern Shield crew across Southeast Tennessee.
+            </p>
         </div>
-    }
 
-    <div class="gallery-cta">
-        <a href="@BusinessConfig.Value.FacebookUrl" target="_blank" rel="noopener" class="btn btn-primary" style="display: inline-flex; align-items: center; gap: 0.5rem;">
-            <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z"/></svg>
-            <span>Browse All Recent Job-Site Photos on Facebook →</span>
-        </a>
-    </div>
-</section>
-
-
-<!-- CUSTOMER REVIEWS & TESTIMONIALS -->
-@if (HomeConfig.Value.Testimonials != null && HomeConfig.Value.Testimonials.Any())
-{
-    <section class="reviews-section">
-        <h2>What Our Neighbors Say</h2>
-        <p class="reviews-subtitle">Real feedback from homeowners and builders across Southeast Tennessee</p>
-        <div class="reviews-grid">
-            @foreach (var review in HomeConfig.Value.Testimonials)
-            {
-                <div class="review-card">
-                    <div>
-                        <div class="review-stars">
-                            @for (int i = 0; i < review.Rating; i++)
-                            {
-                                <span>★</span>
-                            }
+        @if (HomeConfig.Value.Gallery != null && HomeConfig.Value.Gallery.Any())
+        {
+            <div class="gallery-grid">
+                @foreach (var item in HomeConfig.Value.Gallery)
+                {
+                    <div class="gallery-card">
+                        @if (!string.IsNullOrWhiteSpace(item.ImageUrl))
+                        {
+                            <div class="gallery-img-wrapper">
+                                <img src="@item.ImageUrl" alt="@item.Title" loading="lazy" />
+                                <span class="gallery-badge">@item.Category</span>
+                            </div>
+                        }
+                        <div class="gallery-info">
+                            <span class="gallery-location">📍 @item.Location</span>
+                            <h3>@item.Title</h3>
+                            <p class="gallery-desc">@item.Description</p>
                         </div>
-                        <p class="review-quote">"@review.Quote"</p>
                     </div>
-                    <div>
-                        <div class="review-author">@review.Author</div>
-                        <div class="review-meta">@review.Location • @review.ProjectType</div>
-                    </div>
-                </div>
-            }
-        </div>
-        <div class="review-cta">
-            <a href="@BusinessConfig.Value.FacebookUrl" target="_blank" rel="noopener" class="btn btn-secondary">
-                View More Reviews & Photos on Facebook →
+                }
+            </div>
+        }
+
+        <div class="gallery-cta">
+            <a href="@BusinessConfig.Value.FacebookUrl" target="_blank" rel="noopener" class="btn btn-primary" style="display: inline-flex; align-items: center; gap: 0.6rem;">
+                <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z"/></svg>
+                <span>Browse All Recent Job-Site Photos on Facebook &rarr;</span>
             </a>
         </div>
-    </section>
-}
+    </div>
+</section>
 
-<!-- FAQ SECTION -->
-@if (HomeConfig.Value.Faqs != null && HomeConfig.Value.Faqs.Any())
+<!-- SCOTTY BARRERA FOUNDER STORY -->
+@if (!string.IsNullOrWhiteSpace(HomeConfig.Value.StoryQuote))
 {
-    <section class="faq-section">
-        <h2>Frequently Asked Questions</h2>
-        <div class="faq-list">
-            @foreach (var faq in HomeConfig.Value.Faqs)
-            {
-                <details class="faq-item">
-                    <summary>@faq.Question</summary>
-                    <p>@faq.Answer</p>
-                </details>
-            }
+    <section class="story-section">
+        <div class="content-container">
+            <div class="story-banner-card">
+                <div class="story-content">
+                    <div class="industrial-kicker industrial-kicker-hazard">Owner Commitment</div>
+                    <h2>@HomeConfig.Value.StoryHeading</h2>
+                    <blockquote class="story-quote">
+                        "@HomeConfig.Value.StoryQuote"
+                    </blockquote>
+                    <p class="story-attribution">— @HomeConfig.Value.StoryAttribution</p>
+                    <div class="story-actions">
+                        <a href="/about" class="btn btn-secondary">Read Scotty &amp; Gracie's Story</a>
+                        <a href="tel:@BusinessConfig.Value.PhoneNumber" class="btn btn-primary">Call (423) 661-9481</a>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 }
 
-<!-- REGIONAL SERVICE AREAS -->
+<!-- CLIENT TESTIMONIALS -->
+@if (HomeConfig.Value.Testimonials != null && HomeConfig.Value.Testimonials.Any())
+{
+    <section class="testimonials-section">
+        <div class="content-container">
+            <div class="section-header-block text-center">
+                <div class="industrial-kicker">Verified Builder &amp; Homeowner Feedback</div>
+                <h2 class="section-title">REPUTATION BUILT ON DRY FOUNDATIONS</h2>
+            </div>
+
+            <div class="testimonials-grid">
+                @foreach (var t in HomeConfig.Value.Testimonials)
+                {
+                    <div class="testimonial-card">
+                        <div class="star-rating">★★★★★</div>
+                        <p class="testimonial-quote">"@t.Quote"</p>
+                        <div class="testimonial-meta">
+                            <strong>@t.Author</strong>
+                            <span>@t.Location • @t.ProjectType</span>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </section>
+}
+
+<!-- FREQUENTLY ASKED QUESTIONS -->
+@if (HomeConfig.Value.Faqs != null && HomeConfig.Value.Faqs.Any())
+{
+    <section class="faqs-section">
+        <div class="content-container">
+            <div class="section-header-block">
+                <div class="industrial-kicker">Waterproofing Contractor Insights</div>
+                <h2 class="section-title">FOUNDATION &amp; DRAINAGE QUESTIONS</h2>
+            </div>
+
+            <div class="faqs-grid">
+                @foreach (var faq in HomeConfig.Value.Faqs)
+                {
+                    <div class="faq-item">
+                        <h3>@faq.Question</h3>
+                        <p>@faq.Answer</p>
+                    </div>
+                }
+            </div>
+        </div>
+    </section>
+}
+
+<!-- REGIONAL SERVICE AREA COVERAGE -->
 @if (HomeConfig.Value.ServiceAreas != null && HomeConfig.Value.ServiceAreas.Any())
 {
     <section class="service-areas-section">
-        <h2>Serving Southeast Tennessee</h2>
-        <p>Reliable on-site consultations, footer treatments, and French drains throughout our region:</p>
-        <div class="area-tags">
-            @foreach (var area in HomeConfig.Value.ServiceAreas)
-            {
-                <span class="area-tag">📍 @area</span>
-            }
+        <div class="content-container text-center">
+            <div class="industrial-kicker">Regional Service Coverage</div>
+            <h2 class="section-title">PROUDLY SERVING SOUTHEAST TENNESSEE</h2>
+            <p class="section-lead" style="margin-left: auto; margin-right: auto;">
+                Headquartered in Bradley County, Scotty and the crew travel throughout Southeast Tennessee to deliver commercial-grade foundation defense.
+            </p>
+            <div class="areas-badge-cloud">
+                @foreach (var area in HomeConfig.Value.ServiceAreas)
+                {
+                    <span class="area-badge">📍 @area</span>
+                }
+            </div>
         </div>
     </section>
 }
 
+<!-- FINAL CALL TO ACTION BAR -->
+<section class="final-cta-section">
+    <div class="content-container">
+        <div class="final-cta-box">
+            <div class="final-cta-text">
+                <h2>READY TO SHIELD YOUR FOUNDATION FROM WATER DAMAGE?</h2>
+                <p>Call Scotty Barrera directly to discuss your new construction plans, foundation waterproofing specs, or schedule a free site evaluation.</p>
+            </div>
+            <div class="final-cta-buttons">
+                <a href="/contact" class="btn btn-primary">Request Free Estimate</a>
+                <a href="tel:@BusinessConfig.Value.PhoneNumber" class="btn btn-secondary">Call Scotty: @BusinessConfig.Value.PhoneNumber</a>
+            </div>
+        </div>
+    </div>
+</section>
