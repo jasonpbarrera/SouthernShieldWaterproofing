@@ -147,23 +147,30 @@ a:hover {
     font-weight: 700;
 }
 
+.utility-badge-gold {
+    color: var(--brand-hazard);
+    font-weight: 700;
+}
+
 .utility-call-link {
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
     color: #ffffff !important;
-    background: var(--brand-accent);
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.22);
     padding: 0.25rem 0.85rem;
     border-radius: 4px;
     font-weight: 800;
     letter-spacing: 0.05em;
     font-family: var(--font-display);
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     transition: all 0.2s ease;
 }
 
 .utility-call-link:hover {
-    background: var(--brand-accent-hover);
+    background: var(--brand-accent);
+    border-color: var(--brand-accent);
     transform: translateY(-1px);
 }
 
@@ -197,7 +204,7 @@ a:hover {
 }
 
 .brand-logo-img {
-    height: 52px;
+    height: 50px;
     width: auto;
     object-fit: contain;
     display: block;
@@ -210,7 +217,7 @@ a:hover {
 
 .brand-title {
     font-family: var(--font-heading);
-    font-size: 1.45rem;
+    font-size: 1.4rem;
     font-weight: 900;
     color: var(--brand-primary);
     line-height: 1;
@@ -268,27 +275,26 @@ a:hover {
 .header-quote-cta {
     display: inline-flex;
     align-items: center;
-    gap: 0.5rem;
-    background: var(--brand-accent);
-    color: #ffffff !important;
-    border: 2px solid var(--brand-accent);
-    padding: 0.6rem 1.25rem;
-    border-radius: 6px;
+    gap: 0.45rem;
+    background: var(--brand-hazard);
+    color: var(--brand-primary) !important;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    padding: 0.6rem 1.2rem;
+    border-radius: 4px;
     font-family: var(--font-heading);
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 0.04em;
-    box-shadow: 0 4px 12px rgba(21, 106, 183, 0.25);
+    box-shadow: 0 2px 8px rgba(245, 158, 11, 0.35);
     transition: all 0.2s ease;
 }
 
 .header-quote-cta:hover {
-    background: var(--brand-accent-hover);
-    border-color: var(--brand-accent-hover);
-    color: #ffffff !important;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(21, 106, 183, 0.4);
+    background: #d97706;
+    color: #0f172a !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(245, 158, 11, 0.45);
 }
 
 /* =========================================
@@ -300,7 +306,7 @@ a:hover {
     justify-content: center;
     gap: 0.5rem;
     padding: 0.85rem 1.75rem;
-    border-radius: 6px;
+    border-radius: 4px;
     font-family: var(--font-heading);
     font-size: 1rem;
     font-weight: 800;
@@ -313,15 +319,28 @@ a:hover {
 }
 
 .btn-primary {
-    background: linear-gradient(135deg, #156ab7 0%, #0e5292 100%);
+    background: var(--brand-accent);
     color: #ffffff !important;
     box-shadow: 0 4px 14px rgba(21, 106, 183, 0.35);
     border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .btn-primary:hover {
-    background: linear-gradient(135deg, #0e5292 0%, #093c6d 100%);
+    background: var(--brand-accent-hover);
     box-shadow: 0 6px 20px rgba(21, 106, 183, 0.45);
+    transform: translateY(-2px);
+}
+
+.btn-safety {
+    background: var(--brand-hazard);
+    color: var(--brand-primary) !important;
+    box-shadow: 0 4px 14px rgba(245, 158, 11, 0.4);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.btn-safety:hover {
+    background: #d97706;
+    box-shadow: 0 6px 20px rgba(245, 158, 11, 0.55);
     transform: translateY(-2px);
 }
 
@@ -520,6 +539,33 @@ a:hover {
         flex-direction: column;
         align-items: flex-start;
         gap: 0.5rem 1rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .top-utility-inner {
+        padding: 0.4rem 1rem;
+        font-size: 0.78rem;
+    }
+
+    .utility-badge-group {
+        gap: 0.5rem;
+    }
+
+    .content-container {
+        padding: 2.5rem 1rem;
+    }
+
+    .navbar-brand-group {
+        gap: 0.65rem;
+    }
+
+    .brand-title {
+        font-size: 1.2rem;
+    }
+
+    .brand-subtitle {
+        font-size: 0.65rem;
     }
 }
 

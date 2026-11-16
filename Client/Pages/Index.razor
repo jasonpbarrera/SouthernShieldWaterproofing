@@ -1,371 +1,476 @@
 @page "/"
 @inject IOptions<BusinessSettings> BusinessConfig
 @inject IOptions<HomePageSettings> HomeConfig
+@inject IOptions<ContactPageSettings> ContactConfig
+@inject HttpClient Http
 
 <PageTitle>@BusinessConfig.Value.ShortName | Foundation Waterproofing, Footing Treatment &amp; French Drains</PageTitle>
 
-<!-- BESPOKE SHIELD HERO SECTION -->
-<section class="shield-hero">
-    <div class="shield-hero-container">
-        <div class="shield-hero-content">
-            <div class="shield-kicker-tag">
-                <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>
-                <span>LICENSED &amp; INSURED FOUNDATION WATERPROOFING SPECIALIST</span>
+<!-- CONTRACTOR SPLIT HERO SECTION -->
+<section class="contractor-hero">
+    <div class="hero-container">
+        <!-- Left: Trade Positioning & Direct Call Actions -->
+        <div class="hero-text-col">
+            <div class="hero-kicker">
+                🛡️ SUB-GRADE FOUNDATION DEFENSE &amp; SITE DRAINAGE
             </div>
-
-            <h1 class="shield-hero-title">
-                PERMANENT FOUNDATION DEFENSE.<br />
-                <span class="shield-blue-text">BUILT TO KEEP WATER OUT FOR LIFE.</span>
+            <h1 class="hero-headline">
+                STOP WATER AT THE FOOTING.<br />
+                <span>BUILT FOR TENNESSEE CLAY.</span>
             </h1>
-
-            <p class="shield-hero-lead">
-                Commercial spray-applied elastomeric polymer membranes, footing cold-joint waterstops, heavy backfill armor, and laser-graded French drainage engineered for Southeast Tennessee's heavy red clay and hydrostatic pressure. Scotty Barrera on-site on every single project.
+            <p class="hero-lead">
+                We spray commercial-grade elastomeric polymer membranes, seal footing cold-joints, install heavy dimpled backfill armor, and trench laser-graded French drains across Southeast Tennessee. Owner Scotty Barrera is on-site running the rig on every project.
             </p>
-
-            <div class="shield-hero-actions">
-                <a href="/contact" class="btn btn-primary shield-btn-primary">
-                    <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
-                    <span>Request Free Site Inspection</span>
-                </a>
-                <a href="tel:@BusinessConfig.Value.PhoneNumber" class="btn btn-secondary shield-btn-secondary">
+            <div class="hero-cta-row">
+                <a href="tel:@BusinessConfig.Value.PhoneNumber" class="btn btn-safety hero-call-btn">
                     <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24c1.12.37 2.33.57 3.58.57a1 1 0 011 1V20a1 1 0 01-1 1C10.61 21 3 13.39 3 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.46.57 3.58a1 1 0 01-.25 1.01l-2.2 2.2z"/></svg>
                     <span>Call Scotty: @BusinessConfig.Value.PhoneNumber</span>
                 </a>
+                <a href="#services" class="btn btn-secondary hero-services-btn">
+                    <span>View Capabilities &darr;</span>
+                </a>
+            </div>
+            <div class="hero-proof-list">
+                <span>✓ 100% Owner Operated</span>
+                <span>✓ Commercial Polymer (No Tar)</span>
+                <span>✓ Footing Cold-Joint Sealing</span>
+                <span>✓ Washed Stone Drainage</span>
+            </div>
+        </div>
+
+        <!-- Right: Functional Contractor Quick Inspection Card -->
+        <div class="hero-intake-card">
+            <div class="intake-header">
+                <h3>Request Free Inspection</h3>
+                <p>Direct assessment from Scotty Barrera within 24–48 hours.</p>
             </div>
 
-            <div class="shield-trust-pills">
-                <div class="trust-pill">
-                    <span class="pill-dot"></span>
-                    <span>100% Seamless Polymer Spray</span>
+            @if (isSubmitted)
+            {
+                <div class="intake-success-box">
+                    <div class="success-icon">✓</div>
+                    <h4>Request Received!</h4>
+                    <p>Thank you, <strong>@leadName</strong>. Scotty Barrera will review your foundation details and call you at <strong>@leadPhone</strong> shortly.</p>
+                    <button class="btn btn-secondary btn-sm" @onclick="ResetIntakeForm" style="margin-top: 1rem;">
+                        Submit Another Request
+                    </button>
                 </div>
-                <div class="trust-pill">
-                    <span class="pill-dot"></span>
-                    <span>Footing Cold-Joint Waterstop</span>
-                </div>
-                <div class="trust-pill">
-                    <span class="pill-dot"></span>
-                    <span>Engineered French Drainage</span>
-                </div>
-                <div class="trust-pill">
-                    <span class="pill-dot"></span>
-                    <span>Dimpled Backfill Armor</span>
-                </div>
-            </div>
+            }
+            else
+            {
+                <form class="intake-form" @onsubmit="SubmitQuickInspectionAsync" @onsubmit:preventDefault>
+                    <div class="form-group">
+                        <label for="leadName">Your Name</label>
+                        <input id="leadName" type="text" @bind="leadName" placeholder="John Doe" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="leadPhone">Phone Number</label>
+                        <input id="leadPhone" type="tel" @bind="leadPhone" placeholder="(423) 555-0123" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="leadService">Project Type</label>
+                        <select id="leadService" @bind="leadService">
+                            <option value="New Foundation Waterproofing">New Foundation Waterproofing</option>
+                            <option value="Footing Cold-Joint Sealing">Footing Cold-Joint Sealing</option>
+                            <option value="Exterior French Drainage &amp; Runoff">Exterior French Drainage &amp; Runoff</option>
+                            <option value="Dimpled Backfill Armor Board">Dimpled Backfill Armor Board</option>
+                            <option value="Full Foundation Defense Package">Full Foundation Defense Package</option>
+                            <option value="Free On-Site Inspection">Free On-Site Inspection</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="leadCity">Job Location / City</label>
+                        <input id="leadCity" type="text" @bind="leadCity" placeholder="Cleveland, Chattanooga, Ooltewah, etc." required />
+                    </div>
+
+                    @if (!string.IsNullOrWhiteSpace(submissionError))
+                    {
+                        <div class="intake-error">@submissionError</div>
+                    }
+
+                    <button type="submit" class="intake-submit-btn" disabled="@isSubmitting">
+                        @if (isSubmitting)
+                        {
+                            <span>Sending Details...</span>
+                        }
+                        else
+                        {
+                            <span>Get Free Site Inspection &rarr;</span>
+                        }
+                    </button>
+                    <div class="intake-note">
+                        No high-pressure sales reps. Scotty visits your job site personally.
+                    </div>
+                </form>
+            }
         </div>
     </div>
 </section>
 
-<!-- THE 4-BARRIER FOUNDATION DEFENSE SYSTEM -->
-<section class="defense-system-section">
-    <div class="content-container">
-        <div class="section-heading-center">
-            <div class="defense-tag">The Southern Shield Engineering Standard</div>
-            <h2 class="defense-title">OUR 4-LAYER FOUNDATION DEFENSE SYSTEM</h2>
-            <p class="defense-subtitle">
-                Waterproofing isn't just spraying tar on a wall. Real foundation protection requires a comprehensive 4-barrier defense system engineered to stop water intrusion from footing to final grade.
+<!-- SECTION 2: 3 CORE CONTRACTOR TRADE SPECIALTIES -->
+<section class="services-overview-section" id="services">
+    <div class="container">
+        <div class="section-header-clean">
+            <span class="section-tag-trade">Specialized Sub-Grade Contracting</span>
+            <h2 class="section-title-clean">Our Foundation Defense Services</h2>
+            <p class="section-subtitle-clean">
+                Targeted solutions designed to withstand hydrostatic pressure, soil moisture, and heavy mountain runoff.
             </p>
         </div>
 
-        <div class="defense-layers-grid">
-            <!-- Barrier 01 -->
-            <div class="defense-layer-card">
-                <div class="layer-header">
-                    <span class="layer-number">01</span>
-                    <div class="layer-icon-circle">
-                        <ShieldIcon Name="footing" CssClass="layer-svg" />
-                    </div>
+        <div class="trade-cards-grid">
+            <!-- Card 1 -->
+            <div class="trade-card">
+                <div class="trade-icon-header">
+                    <ShieldIcon Name="membrane" CssClass="trade-svg" />
                 </div>
-                <span class="layer-badge">CAPILLARY WATERSTOP</span>
+                <h3>Polymer Spray Membrane</h3>
+                <p>
+                    Applied at high pressure to form an impenetrable, seamless elastomeric rubber envelope. Unlike brittle tar, our polymer stretches up to 800% to bridge foundation settling cracks without tearing.
+                </p>
+                <ul class="trade-bullets">
+                    <li><span>✓</span> 100% Seamless Monolithic Coverage</li>
+                    <li><span>✓</span> Bridges Settling &amp; Shrinkage Cracks</li>
+                    <li><span>✓</span> Subterranean Hydrostatic Rated</li>
+                </ul>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="trade-card">
+                <div class="trade-icon-header">
+                    <ShieldIcon Name="footing" CssClass="trade-svg" />
+                </div>
                 <h3>Footing Cold-Joint Seal</h3>
                 <p>
-                    Where the vertical wall meets the horizontal footing is the #1 point of moisture entry. We apply a continuous elastomeric waterstop bead along the keyway joint to block upward groundwater wicking before it reaches the floor.
+                    Where your foundation wall meets the concrete footing is the #1 entry point for groundwater. We clean and apply a continuous elastomeric waterstop barrier across the keyway to stop wicking.
                 </p>
-                <div class="layer-spec">
-                    <strong>Primary Target:</strong> Subterranean Keyway Cold Joint
+                <ul class="trade-bullets">
+                    <li><span>✓</span> Sub-Grade Keyway Cold-Joint Sealing</li>
+                    <li><span>✓</span> Blocks Capillary Ground Water Wicking</li>
+                    <li><span>✓</span> Protects Basement Slab Perimeter</li>
+                </ul>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="trade-card">
+                <div class="trade-icon-header">
+                    <ShieldIcon Name="french-drain" CssClass="trade-svg" />
+                </div>
+                <h3>French Drainage &amp; Armor</h3>
+                <p>
+                    High-density dimpled HDPE drainage board protects the rubber membrane from machine backfill rock punctures while perforated pipe bedded in washed river rock carries footing water to daylight.
+                </p>
+                <ul class="trade-bullets">
+                    <li><span>✓</span> Dimpled Armor Shields During Backfill</li>
+                    <li><span>✓</span> Clean Washed River Rock Bedding</li>
+                    <li><span>✓</span> Non-Woven Geotextile Silt Filtration</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SECTION 3: ARCHITECTURAL BLUEPRINT (STEP BY STEP) -->
+<section class="blueprint-section">
+    <div class="container">
+        <div class="blueprint-layout">
+            <div class="blueprint-info">
+                <span class="section-tag-trade">Engineering Standard</span>
+                <h2>The 4-Layer Foundation Envelope</h2>
+                <p>
+                    Waterproofing is an engineered system, not a coat of paint. Here is how Southern Shield builds a permanent sub-grade defense from footing to grade.
+                </p>
+
+                <div class="blueprint-stack">
+                    <div class="blueprint-step-card">
+                        <span class="step-num">01</span>
+                        <div class="step-body">
+                            <h4>Footing Preparation &amp; Cold-Joint Seal</h4>
+                            <p>We excavate and clean the virgin footing, applying an elastomeric hydro-stop bead directly along the wall-to-footing keyway seam.</p>
+                        </div>
+                    </div>
+
+                    <div class="blueprint-step-card">
+                        <span class="step-num">02</span>
+                        <div class="step-body">
+                            <h4>High-Build Polymer Spray Membrane</h4>
+                            <p>Commercial-grade rubberized polymer sprayed under pressure across the entire foundation face, creating a flexible, seamless waterproof barrier.</p>
+                        </div>
+                    </div>
+
+                    <div class="blueprint-step-card">
+                        <span class="step-num">03</span>
+                        <div class="step-body">
+                            <h4>Dimpled HDPE Backfill Armor</h4>
+                            <p>Tough dimpled drainage board installed over the membrane. Sharp stones and equipment backfill bounce off without gouging the waterproof seal.</p>
+                        </div>
+                    </div>
+
+                    <div class="blueprint-step-card">
+                        <span class="step-num">04</span>
+                        <div class="step-body">
+                            <h4>Laser-Graded Washed Stone French Drain</h4>
+                            <p>Perforated drainage pipe bedded in washed river gravel and wrapped in filter fabric catches groundwater and evacuates it safely away.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <!-- Barrier 02 -->
-            <div class="defense-layer-card featured-layer">
-                <div class="layer-header">
-                    <span class="layer-number">02</span>
-                    <div class="layer-icon-circle featured-circle">
-                        <ShieldIcon Name="membrane" CssClass="layer-svg" />
-                    </div>
-                </div>
-                <span class="layer-badge featured-badge">SEAMLESS ELASTOMERIC MEMBRANE</span>
-                <h3>Rubberized Polymer Spray</h3>
+            <!-- RIGHT VISUAL BLUEPRINT BOX -->
+            <div class="blueprint-visual-box">
+                <span class="blueprint-badge">📐 Trade Field Specifications</span>
+                <h3>Engineered for Tennessee Clay</h3>
                 <p>
-                    Applied at high pressure to form a seamless, flexible rubber barrier across the entire foundation wall face. Unlike brittle tar, our elastomeric polymer stretches over foundation settling cracks without tearing or leaking.
+                    Southeast Tennessee's heavy red clay exerts intense lateral hydrostatic pressure and expands dramatically during wet winters. Minimum-code systems fail here. Southern Shield is built specifically for this regional soil.
                 </p>
-                <div class="layer-spec">
-                    <strong>Primary Target:</strong> 100% Monolithic Wall Coverage
-                </div>
-            </div>
 
-            <!-- Barrier 03 -->
-            <div class="defense-layer-card">
-                <div class="layer-header">
-                    <span class="layer-number">03</span>
-                    <div class="layer-icon-circle">
-                        <ShieldIcon Name="backfill" CssClass="layer-svg" />
-                    </div>
-                </div>
-                <span class="layer-badge">PHYSICAL BACKFILL ARMOR</span>
-                <h3>Dimpled Drainage Core Board</h3>
-                <p>
-                    Heavy-duty high-density polyethylene dimpled board shields the polymer membrane against sharp shale, red clay compaction, and machine backfill rocks, while creating an air-gap relief channel for descending water.
-                </p>
-                <div class="layer-spec">
-                    <strong>Primary Target:</strong> Backfill Puncture &amp; Cushion Armor
-                </div>
-            </div>
+                <ul class="technical-specs-list">
+                    <li><span>Membrane Chemistry</span> <strong>Elastomeric Rubber Polymer</strong></li>
+                    <li><span>Elongation / Stretch Capacity</span> <strong>Up to 800% Without Tearing</strong></li>
+                    <li><span>Backfill Impact Resistance</span> <strong>Heavy Dimpled HDPE Core</strong></li>
+                    <li><span>Footing Drainage Aggregate</span> <strong>#57 Washed Crushed River Rock</strong></li>
+                    <li><span>Owner Supervision</span> <strong>100% On-Site by Scotty Barrera</strong></li>
+                </ul>
 
-            <!-- Barrier 04 -->
-            <div class="defense-layer-card">
-                <div class="layer-header">
-                    <span class="layer-number">04</span>
-                    <div class="layer-icon-circle">
-                        <ShieldIcon Name="french-drain" CssClass="layer-svg" />
-                    </div>
-                </div>
-                <span class="layer-badge">GRAVITY DISCHARGE</span>
-                <h3>Washed Stone French Drain</h3>
-                <p>
-                    Footing trench drain system featuring perforated heavy-duty pipe bedded in clean washed river gravel and wrapped in non-woven geotextile filter fabric to capture groundwater and discharge it safely away from the home.
-                </p>
-                <div class="layer-spec">
-                    <strong>Primary Target:</strong> Hydrostatic Pressure Relief
+                <div style="margin-top: 2rem;">
+                    <a href="tel:@BusinessConfig.Value.PhoneNumber" class="btn btn-safety" style="width: 100%; justify-content: center;">
+                        <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24c1.12.37 2.33.57 3.58.57a1 1 0 011 1V20a1 1 0 01-1 1C10.61 21 3 13.39 3 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.46.57 3.58a1 1 0 01-.25 1.01l-2.2 2.2z"/></svg>
+                        <span>Discuss Your Blueprints with Scotty</span>
+                    </a>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- ENGINEERING REALITY: WHY DAMPPROOFING TAR FAILS -->
-<section class="science-contrast-section">
-    <div class="content-container">
-        <div class="section-heading-center">
-            <div class="defense-tag warning-tag">The Builder's Truth</div>
-            <h2 class="defense-title text-white">WHY STANDARD ASPHALT TAR FAILS IN TENNESSEE</h2>
-            <p class="defense-subtitle text-slate-300">
-                Understanding why modern builders and knowledgeable homeowners demand engineered polymer systems over minimum-code asphalt dampproofing tar.
+<!-- SECTION 4: EDUCATIONAL CONTRAST -->
+<section class="trade-contrast-section">
+    <div class="container">
+        <div class="section-header-clean">
+            <span class="section-tag-trade">Builder Education</span>
+            <h2 class="section-title-clean">Why Standard Dampproofing Tar Fails</h2>
+            <p class="section-subtitle-clean">
+                Understand the vital difference between minimum-code builder tar and commercial polymer waterproofing.
             </p>
         </div>
 
-        <div class="science-dual-grid">
-            <!-- Left: Cheap Asphalt Tar -->
-            <div class="science-card failure-card">
-                <div class="science-card-header">
-                    <span class="science-status-badge fail-badge">TYPICAL BUILDER DAMPPROOFING TAR</span>
-                    <h3>Asphalt Tar &amp; Spray Emulsions</h3>
-                </div>
-                <p class="science-summary">
-                    Cheap asphalt tar meets basic building code minimums on day one, but offers zero flexural capability as the foundation settles in Southeast Tennessee's shifting clay and mountain runoff.
+        <div class="contrast-grid">
+            <div class="contrast-box box-failure">
+                <span class="contrast-badge badge-bad">⚠️ Standard Builder Dampproofing Tar</span>
+                <h3>Asphalt Emulsion Tar</h3>
+                <p>
+                    Cheap petroleum tar sprayed by volume builders to pass basic inspection. It is dampproofing, NOT waterproofing.
                 </p>
-                <ul class="science-bullet-list fail-bullets">
-                    <li>
-                        <strong>Becomes Brittle &amp; Oxidizes:</strong> Dries out and cracks within 2 to 3 years after burial.
-                    </li>
-                    <li>
-                        <strong>Zero Crack-Bridging Elasticity:</strong> When concrete cures or settles, hairline cracks tear right through the tar.
-                    </li>
-                    <li>
-                        <strong>Leaves Footing Seam Unsealed:</strong> Cold joint at footing is left bare, allowing water to wick directly upward.
-                    </li>
-                    <li>
-                        <strong>Easily Gouged by Backfill:</strong> Sharp rocks and heavy equipment grading scrape and puncture unprotected tar.
-                    </li>
+                <ul class="contrast-points">
+                    <li><span class="point-x">✕</span> <strong>Becomes Brittle:</strong> Dries out and oxidizes within 2 to 3 years after burial.</li>
+                    <li><span class="point-x">✕</span> <strong>Zero Elasticity:</strong> Normal foundation settling cracks tear right through brittle tar.</li>
+                    <li><span class="point-x">✕</span> <strong>Leaves Footing Seam Bare:</strong> The critical cold joint is neglected, allowing water to wick up.</li>
+                    <li><span class="point-x">✕</span> <strong>Easily Scraped by Rocks:</strong> Sharp backfill clay and stones easily puncture unprotected tar.</li>
                 </ul>
-                <div class="science-card-footer fail-footer">
-                    <span>Average Cost to Excavate &amp; Fix a Leaking Basement: $15,000 – $35,000+</span>
-                </div>
             </div>
 
-            <!-- Right: Southern Shield Commercial Polymer -->
-            <div class="science-card success-card">
-                <div class="science-card-header">
-                    <span class="science-status-badge success-badge">THE SOUTHERN SHIELD SYSTEM</span>
-                    <h3>Commercial Elastomeric Polymer</h3>
-                </div>
-                <p class="science-summary">
-                    An engineered multi-barrier envelope built to withstand brutal hydrostatic pressure, soil expansion, and decades of sub-surface water contact.
+            <div class="contrast-box box-success">
+                <span class="contrast-badge badge-good">🛡️ The Southern Shield Standard</span>
+                <h3>Commercial Polymer Membrane</h3>
+                <p>
+                    A high-performance elastomeric rubber barrier engineered for brutal hydrostatic pressure and lifelong performance.
                 </p>
-                <ul class="science-bullet-list success-bullets">
-                    <li>
-                        <strong>Permanent Flexural Memory:</strong> Stretches over foundation settling cracks without tearing or leaking.
-                    </li>
-                    <li>
-                        <strong>Vapor &amp; Hydrostatic Barrier:</strong> Rated for full sub-grade subterranean commercial water resistance.
-                    </li>
-                    <li>
-                        <strong>Footing Keyway Waterstop:</strong> Dedicated cold-joint water barrier stops capillary moisture wicking cold.
-                    </li>
-                    <li>
-                        <strong>Dimpled Armor &amp; French Drainage:</strong> Rocks are deflected while groundwater is channeled to daylight.
-                    </li>
+                <ul class="contrast-points">
+                    <li><span class="point-check">✓</span> <strong>Permanent Elasticity:</strong> Stretches 800% over settling cracks without leaking.</li>
+                    <li><span class="point-check">✓</span> <strong>True Waterproofing:</strong> Impermeable rubber skin seals against subterranean water pressure.</li>
+                    <li><span class="point-check">✓</span> <strong>Keyway Hydro-Stop:</strong> Dedicated footing cold-joint water barrier stops upward wicking.</li>
+                    <li><span class="point-check">✓</span> <strong>Dimple Board Protection:</strong> Machine backfill and rocks cannot touch the waterproof seal.</li>
                 </ul>
-                <div class="science-card-footer success-footer">
-                    <span>Installed Right the First Time — Lifetime Foundation Peace of Mind</span>
-                </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- JOB-SITE WORK & PROJECT GALLERY -->
-<section class="gallery-section">
-    <div class="content-container">
-        <div class="section-heading-left">
-            <div class="defense-tag">Authentic Regional Project Portfolio</div>
-            <h2 class="defense-title">ON-SITE WORK &amp; FOUNDATION GALLERY</h2>
-            <p class="defense-subtitle">
-                Every photo below represents real foundation waterproofing, footing cold-joint treatments, and French drain installations completed by Scotty Barrera and the Southern Shield crew across Southeast Tennessee.
+<!-- SECTION 5: REAL JOB SITES -->
+<section class="gallery-preview-section">
+    <div class="container">
+        <div class="section-header-clean">
+            <span class="section-tag-trade">Recent Regional Work</span>
+            <h2 class="section-title-clean">Job-Site Photo Gallery</h2>
+            <p class="section-subtitle-clean">
+                Real foundations prepped, waterproofed, and drained by Scotty Barrera across Southeast Tennessee.
             </p>
         </div>
 
         @if (HomeConfig.Value.Gallery != null && HomeConfig.Value.Gallery.Any())
         {
             <div class="gallery-grid">
-                @foreach (var item in HomeConfig.Value.Gallery)
+                @foreach (var item in HomeConfig.Value.Gallery.Take(4))
                 {
-                    <div class="gallery-card">
+                    <div class="gallery-item">
                         @if (!string.IsNullOrWhiteSpace(item.ImageUrl))
                         {
-                            <div class="gallery-img-wrapper">
+                            <div class="gallery-img-box">
                                 <img src="@item.ImageUrl" alt="@item.Title" loading="lazy" />
-                                <span class="gallery-badge">@item.Category</span>
+                                <span class="gallery-cat">@item.Category</span>
                             </div>
                         }
-                        <div class="gallery-info">
-                            <span class="gallery-location">📍 @item.Location</span>
-                            <h3>@item.Title</h3>
-                            <p class="gallery-desc">@item.Description</p>
+                        <div class="gallery-meta">
+                            <h4>@item.Title</h4>
+                            <span class="gallery-loc">📍 @item.Location</span>
+                            <p>@item.Description</p>
                         </div>
                     </div>
                 }
             </div>
         }
 
-        <div class="gallery-cta">
+        <div style="text-align: center; margin-top: 2.5rem;">
             <a href="@BusinessConfig.Value.FacebookUrl" target="_blank" rel="noopener" class="btn btn-primary" style="display: inline-flex; align-items: center; gap: 0.6rem;">
                 <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z"/></svg>
-                <span>Browse Recent Job-Site Photos on Facebook &rarr;</span>
+                <span>Browse All Recent Job-Site Photos on Facebook &rarr;</span>
             </a>
         </div>
     </div>
 </section>
 
-<!-- SCOTTY BARRERA FOUNDER STORY -->
-@if (!string.IsNullOrWhiteSpace(HomeConfig.Value.StoryQuote))
-{
-    <section class="story-section">
-        <div class="content-container">
-            <div class="story-card-wrapper">
-                <div class="story-badge-col">
-                    <img src="images/scotty-barrera.jpg" alt="Scotty Barrera" class="story-portrait" />
-                    <span class="story-owner-title">SCOTTY BARRERA</span>
-                    <span class="story-owner-sub">Owner &amp; On-Site Specialist</span>
+<!-- SECTION 6: MEET SCOTTY BARRERA -->
+<section class="owner-section">
+    <div class="container">
+        <div class="owner-box">
+            <div class="owner-photo-col">
+                <img src="images/scotty-barrera.jpg" alt="Scotty Barrera" class="owner-photo" />
+                <span class="owner-name">Scotty Barrera</span>
+                <span class="owner-title">Owner &amp; On-Site Contractor</span>
+            </div>
+            <div class="owner-content">
+                <span class="section-tag-trade">Direct Contractor Accountability</span>
+                <h3>"I am personally on your job site."</h3>
+                <p>
+                    When you hire Southern Shield, you aren't dealing with a franchise salesman who disappears after signing a contract. Scotty Barrera is on-site managing surface prep, operating the polymer spray rig, inspecting the footing waterstops, and checking the laser grade on your French drain.
+                </p>
+                <div class="owner-actions">
+                    <a href="tel:@BusinessConfig.Value.PhoneNumber" class="btn btn-safety">
+                        <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24c1.12.37 2.33.57 3.58.57a1 1 0 011 1V20a1 1 0 01-1 1C10.61 21 3 13.39 3 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.46.57 3.58a1 1 0 01-.25 1.01l-2.2 2.2z"/></svg>
+                        <span>Call Scotty: @BusinessConfig.Value.PhoneNumber</span>
+                    </a>
+                    <a href="/about" class="btn btn-secondary">
+                        <span>Read Scotty's Story &rarr;</span>
+                    </a>
                 </div>
-                <div class="story-content-col">
-                    <div class="defense-tag">Personal Contractor Accountability</div>
-                    <h2>@HomeConfig.Value.StoryHeading</h2>
-                    <blockquote class="story-quote-text">
-                        "@HomeConfig.Value.StoryQuote"
-                    </blockquote>
-                    <p class="story-attribution">— @HomeConfig.Value.StoryAttribution</p>
-                    <div class="story-btn-row">
-                        <a href="/about" class="btn btn-secondary">Read Scotty &amp; Gracie's Story</a>
-                        <a href="tel:@BusinessConfig.Value.PhoneNumber" class="btn btn-primary">Call (423) 661-9481</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-}
-
-<!-- CLIENT TESTIMONIALS -->
-@if (HomeConfig.Value.Testimonials != null && HomeConfig.Value.Testimonials.Any())
-{
-    <section class="testimonials-section">
-        <div class="content-container">
-            <div class="section-heading-center">
-                <div class="defense-tag">Verified Builder &amp; Homeowner Feedback</div>
-                <h2 class="defense-title">REPUTATION BUILT ON DRY FOUNDATIONS</h2>
-            </div>
-
-            <div class="testimonials-grid">
-                @foreach (var t in HomeConfig.Value.Testimonials)
-                {
-                    <div class="testimonial-card">
-                        <div class="star-rating">★★★★★</div>
-                        <p class="testimonial-quote">"@t.Quote"</p>
-                        <div class="testimonial-meta">
-                            <strong>@t.Author</strong>
-                            <span>@t.Location • @t.ProjectType</span>
-                        </div>
-                    </div>
-                }
-            </div>
-        </div>
-    </section>
-}
-
-<!-- FREQUENTLY ASKED QUESTIONS -->
-@if (HomeConfig.Value.Faqs != null && HomeConfig.Value.Faqs.Any())
-{
-    <section class="faqs-section">
-        <div class="content-container">
-            <div class="section-heading-left">
-                <div class="defense-tag">Waterproofing Trade Insights</div>
-                <h2 class="defense-title">FOUNDATION &amp; DRAINAGE QUESTIONS</h2>
-            </div>
-
-            <div class="faqs-grid">
-                @foreach (var faq in HomeConfig.Value.Faqs)
-                {
-                    <div class="faq-item">
-                        <h3>@faq.Question</h3>
-                        <p>@faq.Answer</p>
-                    </div>
-                }
-            </div>
-        </div>
-    </section>
-}
-
-<!-- REGIONAL SERVICE AREA COVERAGE -->
-@if (HomeConfig.Value.ServiceAreas != null && HomeConfig.Value.ServiceAreas.Any())
-{
-    <section class="service-areas-section">
-        <div class="content-container text-center">
-            <div class="defense-tag text-blue-light">Regional Service Coverage</div>
-            <h2 class="defense-title text-white">PROUDLY SERVING SOUTHEAST TENNESSEE</h2>
-            <p class="service-lead-text">
-                Headquartered in Bradley County, Scotty and the crew travel throughout Southeast Tennessee to deliver commercial-grade foundation defense.
-            </p>
-            <div class="areas-badge-cloud">
-                @foreach (var area in HomeConfig.Value.ServiceAreas)
-                {
-                    <span class="area-badge">📍 @area</span>
-                }
-            </div>
-        </div>
-    </section>
-}
-
-<!-- FINAL CALL TO ACTION BAR -->
-<section class="final-cta-section">
-    <div class="content-container">
-        <div class="final-shield-cta-box">
-            <div class="final-cta-text">
-                <h2>READY TO SHIELD YOUR FOUNDATION FROM WATER DAMAGE?</h2>
-                <p>Call Scotty Barrera directly to discuss your new construction plans, foundation waterproofing specs, or schedule a free site evaluation in Cleveland, Chattanooga, or Southeast TN.</p>
-            </div>
-            <div class="final-cta-buttons">
-                <a href="/contact" class="btn btn-primary cta-btn-white">Request Free Inspection</a>
-                <a href="tel:@BusinessConfig.Value.PhoneNumber" class="btn btn-secondary cta-btn-outline">Call Scotty: @BusinessConfig.Value.PhoneNumber</a>
             </div>
         </div>
     </div>
 </section>
+
+<!-- SECTION 7: TESTIMONIALS -->
+@if (HomeConfig.Value.Testimonials != null && HomeConfig.Value.Testimonials.Any())
+{
+    <section class="reviews-section">
+        <div class="container">
+            <div class="section-header-clean">
+                <span class="section-tag-trade">Verified Local Feedback</span>
+                <h2 class="section-title-clean">What Builders &amp; Homeowners Say</h2>
+            </div>
+
+            <div class="reviews-grid">
+                @foreach (var t in HomeConfig.Value.Testimonials)
+                {
+                    <div class="review-card">
+                        <div class="review-stars">★★★★★</div>
+                        <p class="review-quote">"@t.Quote"</p>
+                        <div class="review-author">@t.Author</div>
+                        <div class="review-meta">@t.Location &bull; @t.ProjectType</div>
+                    </div>
+                }
+            </div>
+        </div>
+    </section>
+}
+
+<!-- SECTION 8: SERVICE AREA & DIRECT CTA -->
+<section class="service-area-strip">
+    <div class="container">
+        <h2 style="font-family: var(--font-heading); font-size: 2rem; font-weight: 900; text-transform: uppercase; margin-bottom: 0.5rem; color: #ffffff;">Proudly Serving Southeast Tennessee</h2>
+        <p style="color: #cbd5e1; max-width: 650px; margin: 0 auto;">Based in Bradley County, we travel throughout the region to deliver commercial-grade foundation defense.</p>
+        
+        <div class="area-cloud">
+            @if (HomeConfig.Value.ServiceAreas != null)
+            {
+                @foreach (var area in HomeConfig.Value.ServiceAreas)
+                {
+                    <span class="area-pill">📍 @area, TN</span>
+                }
+            }
+        </div>
+
+        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+            <a href="tel:@BusinessConfig.Value.PhoneNumber" class="btn btn-safety">
+                <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24c1.12.37 2.33.57 3.58.57a1 1 0 011 1V20a1 1 0 01-1 1C10.61 21 3 13.39 3 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.46.57 3.58a1 1 0 01-.25 1.01l-2.2 2.2z"/></svg>
+                <span>Call Scotty: @BusinessConfig.Value.PhoneNumber</span>
+            </a>
+            <a href="/contact" class="btn btn-secondary">Request Free Inspection Online</a>
+        </div>
+    </div>
+</section>
+
+@code {
+    private string leadName = "";
+    private string leadPhone = "";
+    private string leadService = "New Foundation Waterproofing";
+    private string leadCity = "";
+    private bool isSubmitting = false;
+    private bool isSubmitted = false;
+    private string? submissionError;
+
+    private async Task SubmitQuickInspectionAsync()
+    {
+        if (string.IsNullOrWhiteSpace(leadName) || string.IsNullOrWhiteSpace(leadPhone))
+            return;
+
+        isSubmitting = true;
+        submissionError = null;
+
+        var payload = new
+        {
+            BusinessId = BusinessConfig.Value.BusinessId,
+            CompanyName = BusinessConfig.Value.CompanyName,
+            Name = leadName,
+            Phone = leadPhone,
+            Email = $"{leadPhone.Replace("-","").Replace(" ","")}@inspection.southernshield.com",
+            PreferredContactMethod = "Phone Call",
+            ServiceType = leadService,
+            Message = $"Homepage Quick Inspection Request for {leadService} in {leadCity}.",
+            Honeypot = ""
+        };
+
+        try
+        {
+            var response = await Http.PostAsJsonAsync(ContactConfig.Value.ApiEndpoint, payload);
+            if (response.IsSuccessStatusCode)
+            {
+                isSubmitted = true;
+            }
+            else
+            {
+                submissionError = $"Unable to send request online. Please call Scotty directly at {BusinessConfig.Value.PhoneNumber}.";
+            }
+        }
+        catch
+        {
+            // If offline or CORS, still provide positive guidance
+            submissionError = $"Please call Scotty directly at {BusinessConfig.Value.PhoneNumber} to schedule.";
+        }
+        finally
+        {
+            isSubmitting = false;
+        }
+    }
+
+    private void ResetIntakeForm()
+    {
+        leadName = "";
+        leadPhone = "";
+        leadCity = "";
+        isSubmitted = false;
+        submissionError = null;
+    }
+}
