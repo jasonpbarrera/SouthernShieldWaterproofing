@@ -159,7 +159,7 @@ Sitemap: {domain}/sitemap.xml
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{html.escape(page_title)}</title>
     <meta name="description" content="{html.escape(seo_description, quote=True)}" />
-    <link rel="canonical" href="{html.escape(domain, quote=True)}/" />
+    <link rel="canonical" id="canonical-link" href="{html.escape(domain, quote=True)}/" />
 
     <!-- Developer & Copyright Attribution -->
     <meta name="author" content="Jason Barrera, JB Digital Services" />
@@ -173,8 +173,24 @@ Sitemap: {domain}/sitemap.xml
     <meta property="og:title" content="{html.escape(company_name, quote=True)}" />
     <meta property="og:description" content="{html.escape(seo_description, quote=True)}" />
     <meta property="og:image" content="{html.escape(full_logo_url, quote=True)}" />
-    <meta property="og:url" content="{html.escape(domain, quote=True)}" />
+    <meta property="og:url" id="og-url-meta" content="{html.escape(domain, quote=True)}/" />
     <meta property="og:type" content="website" />
+    <script>
+        (function () {{
+            function syncCanonical(pathOverride) {{
+                var rawPath = typeof pathOverride === "string" ? pathOverride : (window.location.pathname || "/");
+                if (!rawPath.startsWith("/")) rawPath = "/" + rawPath;
+                if (rawPath.length > 1 && rawPath.endsWith("/")) rawPath = rawPath.slice(0, -1);
+                var canonicalUrl = "{html.escape(domain, quote=True)}" + rawPath;
+                var linkEl = document.getElementById("canonical-link");
+                if (linkEl) linkEl.setAttribute("href", canonicalUrl);
+                var ogEl = document.getElementById("og-url-meta");
+                if (ogEl) ogEl.setAttribute("content", canonicalUrl);
+            }}
+            syncCanonical();
+            window.updateCanonicalUrl = syncCanonical;
+        }})();
+    </script>
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
