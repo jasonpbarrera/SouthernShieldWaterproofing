@@ -47,7 +47,6 @@ graph LR
 * `worker/index.js` — Cloudflare Worker handling `POST /api/leads` (honeypot check, validation, HTML escaping, Brevo transactional email) and delegating static assets to `ASSETS`
 * `wrangler.toml` — Cloudflare Workers with Static Assets configuration (`southern-shield-waterproofing`, custom domains `southernshieldwaterproofing.com` & `www.southernshieldwaterproofing.com`)
 * `.github/workflows/cloudflare-worker.yml` — Automated CI/CD deploying `.NET 10` Blazor WASM + Worker to Cloudflare Workers and pinging IndexNow
-* `Api/` — Legacy .NET 10 Isolated Azure Functions (retained pending final Azure retirement)
 * `scripts/`
   * `sync-client-config.py` — Auto-generates `index.html`, `sitemap.xml`, `robots.txt`, and `manifest.webmanifest` from `appsettings.json`
 
@@ -129,10 +128,14 @@ Alternatively, Scotty can send using Google's own SMTP servers (our Cloudflare S
 ## Local Development & Build
 
 ```bash
-# Build Client and Api
-dotnet build SouthernShieldWaterproofing.slnx
+# Build Blazor WASM client
+dotnet build SouthernShieldWaterproofing.slnx -c Release
 
 # Run Blazor WASM client locally
 dotnet run --project Client/SmallBusinessSite.Client.csproj
+
+# Publish & deploy to Cloudflare Workers
+dotnet publish Client/SmallBusinessSite.Client.csproj -c Release -o publish_output
+npx wrangler deploy
 ```
 
