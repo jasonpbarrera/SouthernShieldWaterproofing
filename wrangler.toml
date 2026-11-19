@@ -1,0 +1,22 @@
+name = "southern-shield-waterproofing"
+main = "worker/index.js"
+compatibility_date = "2026-04-01"
+workers_dev = true
+
+[assets]
+directory = "publish_output/wwwroot"
+binding = "ASSETS"
+not_found_handling = "single-page-application"
+run_worker_first = ["/api/*"]
+
+[vars]
+LEAD_NOTIFICATION_EMAIL = "info@southernshieldwaterproofing.com"
+BREVO_SENDER_EMAIL = "info@southernshieldwaterproofing.com"
+
+[[routes]]
+pattern = "southernshieldwaterproofing.com"
+custom_domain = true
+
+[[routes]]
+pattern = "www.southernshieldwaterproofing.com"
+custom_domain = true

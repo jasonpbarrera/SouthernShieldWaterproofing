@@ -1,6 +1,6 @@
 # Southern Shield Waterproofing Website
 
-A high-performance, configuration-driven **$0/month small business website, lead capture, and customer inquiry platform** for **Southern Shield Waterproofing** built with **Blazor WebAssembly (.NET 10)**, **Azure Static Web Apps Managed Functions (.NET 10)**, **Azure Cosmos DB (Multi-Tenant Free Tier)**, **Cloudflare Email Routing**, and **Brevo Transactional Email**.
+A high-performance, configuration-driven **$0/month small business website, lead capture, and customer inquiry platform** for **Southern Shield Waterproofing** built with **Blazor WebAssembly (.NET 10 PWA)**, **Cloudflare Workers with Static Assets (Free Tier)**, **Cloudflare Email Routing**, and **Brevo Transactional Email**.
 
 ---
 
@@ -9,16 +9,17 @@ A high-performance, configuration-driven **$0/month small business website, lead
 * **Company Name:** Southern Shield Waterproofing
 * **Owner:** Scotty Barrera
 * **Phone:** (423) 661-9481
-* **Email:** Southernshieldwaterproofing@gmail.com
+* **Email:** info@southernshieldwaterproofing.com (routes to `southernshieldwaterproofing@gmail.com`)
+* **Domains:** `https://southernshieldwaterproofing.com` & `https://www.southernshieldwaterproofing.com`
 * **Service Area:** Southeast Tennessee (Chattanooga, Cleveland, Athens & surrounding communities)
 * **Services:**
   * Foundation Footing Treatment
-  * Waterproofing Wall Membrane
+  * Mar-flex 5000 WB Waterproofing Wall Membrane
   * Drainage Systems (French Drains)
-  * Backfill Protection
+  * Mar-flex TopGun & GeoMat Backfill Armor
 * **Brand Colors:**
   * Primary Shield Blue: `#156ab7`
-  * Safety Foundation Orange: `#e65c0f`
+  * Safety Construction Gold: `#f59e0b`
 
 ---
 
@@ -26,9 +27,10 @@ A high-performance, configuration-driven **$0/month small business website, lead
 
 ```mermaid
 graph LR
-    Visitor["Visitor Browser\n(Blazor WASM)"] -->|"POST /api/leads"| Api["Azure SWA Function\n(LeadsFunction.cs)"]
-    Api -->|"COSMOS_CONNECTION_STRING"| Cosmos[("Azure Cosmos DB (Free Tier)\nDatabase: SmallBusinessPlatform\nContainers: clients | leads | billing")]
-    Api -->|"BREVO_API_KEY"| Brevo["Brevo Transactional Email\n(Alerts Scotty Barrera on phone)"]
+    Visitor["Visitor Browser\n(Blazor WASM PWA)"] -->|"Static Assets (Free & Unlimited)"| Assets["Cloudflare Workers Static Assets\n(southernshieldwaterproofing.com & www)"]
+    Visitor -->|"POST /api/leads"| Worker["Cloudflare Worker\n(worker/index.js)"]
+    Worker -->|"BREVO_API_KEY"| Brevo["Brevo Transactional Email\n(info@southernshieldwaterproofing.com)"]
+    Brevo -->|"Cloudflare Email Routing"| Gmail["Scotty Barrera Inbox"]
 ```
 
 ---
@@ -37,13 +39,15 @@ graph LR
 
 * `Client/` — .NET 10 Blazor WebAssembly PWA
   * `wwwroot/appsettings.json` — Complete brand configuration, color palette, services list, copy, and contact form settings
+  * `wwwroot/service-worker.published.js` — Network-first PWA service worker (`skipWaiting`, `clients.claim`, `/api/*` bypass)
   * `wwwroot/images/logo.png` & `logo.jpg` — Official Southern Shield Waterproofing brand logos
   * `Models/SiteConfiguration.cs` — Strongly typed configuration models
   * `Layout/MainLayout.razor` — Dynamic CSS variable injection and responsive layout
   * `Pages/` — `Index.razor`, `About.razor`, `Services.razor`, and `Contact.razor`
-* `Api/` — .NET 10 Isolated Azure Functions (Azure Static Web Apps Managed API)
-  * `LeadsFunction.cs` — `POST /api/leads` endpoint with honeypot spam protection, native Cosmos DB REST storage, and Brevo email notifications
-* `database/cosmos_schema.json` — Cosmos DB document schema
+* `worker/index.js` — Cloudflare Worker handling `POST /api/leads` (honeypot check, validation, HTML escaping, Brevo transactional email) and delegating static assets to `ASSETS`
+* `wrangler.toml` — Cloudflare Workers with Static Assets configuration (`southern-shield-waterproofing`, custom domains `southernshieldwaterproofing.com` & `www.southernshieldwaterproofing.com`)
+* `.github/workflows/cloudflare-worker.yml` — Automated CI/CD deploying `.NET 10` Blazor WASM + Worker to Cloudflare Workers and pinging IndexNow
+* `Api/` — Legacy .NET 10 Isolated Azure Functions (retained pending final Azure retirement)
 * `scripts/`
   * `sync-client-config.py` — Auto-generates `index.html`, `sitemap.xml`, `robots.txt`, and `manifest.webmanifest` from `appsettings.json`
 

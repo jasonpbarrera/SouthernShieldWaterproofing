@@ -1,0 +1,80 @@
+name: Cloudflare Workers CI/CD
+
+on:
+  push:
+    branches:
+      - main
+      - master
+    paths-ignore:
+      - '**.md'
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+    name: Build & Deploy to Cloudflare Workers
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+          lfs: false
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Cache NuGet Packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
+
+      - name: Sync Static SEO & Manifest from appsettings.json
+        run: python3 scripts/sync-client-config.py
+
+      - name: Publish Blazor Client
+        run: dotnet publish Client/SmallBusinessSite.Client.csproj -c Release -o publish_output -p:ContinuousIntegrationBuild=true
+
+      - name: Deploy to Cloudflare Workers
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+
+      - name: Submit URLs to Search Crawlers (IndexNow)
+        if: github.event_name == 'push'
+        run: |
+          python3 -c '
+          import json, urllib.request
+          try:
+              domain = "https://southernshieldwaterproofing.com"
+              host = "southernshieldwaterproofing.com"
+              urls = [
+                  "https://southernshieldwaterproofing.com/",
+                  "https://southernshieldwaterproofing.com/services",
+                  "https://southernshieldwaterproofing.com/contact",
+                  "https://southernshieldwaterproofing.com/about"
+              ]
+              payload = json.dumps({
+                  "host": host,
+                  "key": "e3d29a08c8474f63bb9b7d8b5c9632f1",
+                  "keyLocation": f"{domain}/e3d29a08c8474f63bb9b7d8b5c9632f1.txt",
+                  "urlList": urls
+              }).encode("utf-8")
+              for ep in ["https://api.indexnow.org/indexnow", "https://www.bing.com/indexnow"]:
+                  try:
+                      req = urllib.request.Request(ep, data=payload, headers={"Content-Type": "application/json; charset=utf-8", "User-Agent": "JBDigitalCI/1.0"})
+                      with urllib.request.urlopen(req, timeout=10) as resp:
+                          print(f"Submitted to {ep}: {resp.status}")
+                  except Exception as e:
+                      print(f"Crawler notice ({ep}): {e}")
+          except Exception as ex:
+              print(f"Crawler submission step notice: {ex}")
+          '

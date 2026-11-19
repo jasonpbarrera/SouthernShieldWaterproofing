@@ -11,3 +11,5 @@ local.settings.json
 .env.local
 
 __pycache__/
+.wrangler/
+.dev.vars
