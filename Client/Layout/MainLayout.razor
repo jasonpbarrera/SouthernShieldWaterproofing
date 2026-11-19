@@ -3,6 +3,9 @@
 @inject IOptions<BusinessSettings> BusinessConfig
 @inject IOptions<ThemeSettings> ThemeConfig
 @inject IOptions<AboutPageSettings> AboutConfig
+@inject NavigationManager Nav
+@inject IJSRuntime JS
+@implements IDisposable
 
 <div class="page">
     <!-- Top Utility Bar -->
@@ -137,7 +140,7 @@
         <div class="footer-bottom">
             <span>&copy; @DateTime.Now.Year @BusinessConfig.Value.CompanyName. All rights reserved. Protecting Your Foundation from the Ground Up.</span>
             <span class="jb-footer-credit">
-                v@(AppVersion) &middot; @BuildDate &middot; Powered by <a href="https://jbdigitalservices.net" target="_blank" rel="noopener noreferrer">JB Digital Services</a>
+                v@(AppVersion) &middot; @BuildDate &middot; Powered by <a href="https://www.jbdigitalservices.net" target="_blank" rel="noopener noreferrer">JB Digital Services</a>
             </span>
         </div>
     </footer>
@@ -151,4 +154,24 @@
             .GetCustomAttributes<AssemblyMetadataAttribute>()
             .FirstOrDefault(a => a.Key == "BuildTimestamp")?.Value
         ?? DateTime.UtcNow.ToString("MMM d, yyyy");
+
+    protected override void OnInitialized()
+    {
+        Nav.LocationChanged += HandleLocationChanged;
+    }
+
+    private async void HandleLocationChanged(object? sender, Microsoft.AspNetCore.Components.Routing.LocationChangedEventArgs e)
+    {
+        try
+        {
+            var relative = Nav.ToBaseRelativePath(e.Location).Split('?', '#')[0].Trim('/');
+            await JS.InvokeVoidAsync("updateCanonicalUrl", string.IsNullOrEmpty(relative) ? "/" : "/" + relative);
+        }
+        catch { }
+    }
+
+    public void Dispose()
+    {
+        Nav.LocationChanged -= HandleLocationChanged;
+    }
 }

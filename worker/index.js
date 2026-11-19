@@ -135,6 +135,11 @@ async function handleLeadSubmission(request, env) {
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
+    if (url.hostname === "www.southernshieldwaterproofing.com") {
+      url.hostname = "southernshieldwaterproofing.com";
+      return Response.redirect(url.toString(), 301);
+    }
+
     const path = url.pathname.replace(/\/+$/, "") || "/";
 
     if (path === "/api/leads") {
